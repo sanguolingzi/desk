@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysStudentMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysStudent">
+    <id column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="student_code" jdbcType="VARCHAR" property="studentCode" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+    <result column="age" jdbcType="TINYINT" property="age" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    <result column="grade_code" jdbcType="VARCHAR" property="gradeCode" />
+    <result column="student_name_py" jdbcType="VARCHAR" property="studentNamePy" />
+    <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+    <result column="sync_flag" jdbcType="TINYINT" property="syncFlag" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="sync_student_code" jdbcType="VARCHAR" property="syncStudentCode" />
+    <result column="sync_school_code" jdbcType="VARCHAR" property="syncSchoolCode" />
+    <result column="sync_class_code" jdbcType="VARCHAR" property="syncClassCode" />
+    <result column="sync_student_id" jdbcType="VARCHAR" property="syncStudentId" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="stage_id" jdbcType="VARCHAR" property="stageId" />
+  </resultMap>
+
+  <resultMap id="BaseResultVOMap" type="com.cunw.cloud.familydesk.common.model.SysStudentVO">
+    <id column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="student_code" jdbcType="VARCHAR" property="studentCode" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+    <result column="age" jdbcType="TINYINT" property="age" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    <result column="grade_code" jdbcType="VARCHAR" property="gradeCode" />
+    <result column="grade_name" jdbcType="VARCHAR" property="gradeName" />
+    <result column="student_name_py" jdbcType="VARCHAR" property="studentNamePy" />
+    <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+    <result column="sync_flag" jdbcType="TINYINT" property="syncFlag" />
+    <result column="sync_student_code" jdbcType="VARCHAR" property="syncStudentCode" />
+    <result column="sync_school_code" jdbcType="VARCHAR" property="syncSchoolCode" />
+    <result column="sync_class_code" jdbcType="VARCHAR" property="syncClassCode" />
+    <result column="sync_student_id" jdbcType="VARCHAR" property="syncStudentId" />
+    <result column="stage_id" jdbcType="VARCHAR" property="stageId" />
+
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_student
+    where student_id = #{studentId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from sys_student
+    where 1!=1
+      <if test="studentCode != null and studentCode != ''">
+        and student_code = #{studentCode}
+      </if>
+      <if test="studentName != null and studentName != ''">
+        and student_name = #{studentName}
+      </if>
+      <if test="age != null">
+        and age = #{age}
+      </if>
+      <if test="sex != null">
+        and sex = #{sex}
+      </if>
+      <if test="schoolName != null and schoolName != ''">
+        and school_name = #{schoolName}
+      </if>
+      <if test="gradeCode != null and gradeCode != ''">
+        and grade_code = #{gradeCode}
+      </if>
+      <if test="studentNamePy != null and studentNamePy != ''">
+        and student_name_py = #{studentNamePy}
+      </if>
+      <if test="headImg != null and headImg != ''">
+        and head_img = #{headImg}
+      </if>
+      <if test="syncFlag != null">
+        and sync_flag = #{syncFlag}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="syncStudentCode != null and syncStudentCode != ''">
+        and sync_student_code = #{syncStudentCode}
+      </if>
+      <if test="syncSchoolCode != null and syncSchoolCode != ''">
+        and sync_school_code = #{syncSchoolCode}
+      </if>
+      <if test="syncClassCode != null and syncClassCode != ''">
+        and sync_class_code = #{syncClassCode}
+      </if>
+      <if test="syncStudentId != null and syncStudentId != ''">
+        and sync_student_id = #{syncStudentId}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysStudent">
+    insert into sys_student (student_id, student_code, student_name, age,
+      sex, school_name, grade_code, 
+      student_name_py, head_img, sync_flag, 
+      status, sync_student_code, sync_school_code, 
+      sync_class_code, sync_student_id, crt_date
+      )
+    values (#{studentId,jdbcType=VARCHAR}, #{studentCode,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR}, #{age,jdbcType=TINYINT},
+      #{sex,jdbcType=TINYINT}, #{schoolName,jdbcType=VARCHAR}, #{gradeCode,jdbcType=VARCHAR}, 
+      #{studentNamePy,jdbcType=VARCHAR}, #{headImg,jdbcType=VARCHAR}, #{syncFlag,jdbcType=TINYINT}, 
+      #{status,jdbcType=TINYINT}, #{syncStudentCode,jdbcType=VARCHAR}, #{syncSchoolCode,jdbcType=VARCHAR}, 
+      #{syncClassCode,jdbcType=VARCHAR}, #{syncStudentId,jdbcType=VARCHAR}, #{crtDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysStudent">
+    insert into sys_student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="studentCode != null">
+        student_code,
+      </if>
+      <if test="studentName != null">
+        student_name,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="schoolName != null">
+        school_name,
+      </if>
+      <if test="gradeCode != null">
+        grade_code,
+      </if>
+      <if test="studentNamePy != null">
+        student_name_py,
+      </if>
+      <if test="headImg != null">
+        head_img,
+      </if>
+      <if test="syncFlag != null">
+        sync_flag,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="syncStudentCode != null">
+        sync_student_code,
+      </if>
+      <if test="syncSchoolCode != null">
+        sync_school_code,
+      </if>
+      <if test="syncClassCode != null">
+        sync_class_code,
+      </if>
+      <if test="syncStudentId != null">
+        sync_student_id,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCode != null">
+        #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null">
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=TINYINT},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="schoolName != null">
+        #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeCode != null">
+        #{gradeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNamePy != null">
+        #{studentNamePy,jdbcType=VARCHAR},
+      </if>
+      <if test="headImg != null">
+        #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="syncFlag != null">
+        #{syncFlag,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="syncStudentCode != null">
+        #{syncStudentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="syncSchoolCode != null">
+        #{syncSchoolCode,jdbcType=VARCHAR},
+      </if>
+      <if test="syncClassCode != null">
+        #{syncClassCode,jdbcType=VARCHAR},
+      </if>
+      <if test="syncStudentId != null">
+        #{syncStudentId,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysStudent">
+    update sys_student
+    set student_code = #{studentCode,jdbcType=VARCHAR},
+      student_name = #{studentName,jdbcType=VARCHAR},
+      age = #{age,jdbcType=TINYINT},
+      sex = #{sex,jdbcType=TINYINT},
+      school_name = #{schoolName,jdbcType=VARCHAR},
+      grade_code = #{gradeCode,jdbcType=VARCHAR},
+      student_name_py = #{studentNamePy,jdbcType=VARCHAR},
+      head_img = #{headImg,jdbcType=VARCHAR},
+      sync_flag = #{syncFlag,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      sync_student_code = #{syncStudentCode,jdbcType=VARCHAR},
+      sync_school_code = #{syncSchoolCode,jdbcType=VARCHAR},
+      sync_class_code = #{syncClassCode,jdbcType=VARCHAR},
+      sync_student_id = #{syncStudentId,jdbcType=VARCHAR},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP}
+    where student_id = #{studentId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.SysStudent">
+    update sys_student
+    <set>
+      <if test="studentCode != null">
+        student_code = #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null">
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=TINYINT},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="schoolName != null">
+        school_name = #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeCode != null">
+        grade_code = #{gradeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNamePy != null">
+        student_name_py = #{studentNamePy,jdbcType=VARCHAR},
+      </if>
+      <if test="headImg != null">
+        head_img = #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="syncFlag != null">
+        sync_flag = #{syncFlag,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="syncStudentCode != null">
+        sync_student_code = #{syncStudentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="syncSchoolCode != null">
+        sync_school_code = #{syncSchoolCode,jdbcType=VARCHAR},
+      </if>
+      <if test="syncClassCode != null">
+        sync_class_code = #{syncClassCode,jdbcType=VARCHAR},
+      </if>
+      <if test="syncStudentId != null">
+        sync_student_id = #{syncStudentId,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where student_id = #{studentId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select ss.student_id, ss.student_code, ss.student_name, ss.age, ss.sex, ss.school_name, ss.grade_code, ss.student_name_py,
+    ss.head_img, ss.sync_flag, ss.status, ss.sync_student_code, ss.sync_school_code, ss.sync_class_code,
+    ss.sync_student_id, ss.crt_date,ssg.stage_id
+    from sys_student ss LEFT JOIN sys_stage_grade ssg on ss.grade_code = ssg.grade_id
+    where ss.student_id = #{studentId,jdbcType=VARCHAR} and ss.status = 1
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select student_id, student_code, student_name, age, sex, school_name, grade_code, student_name_py,
+    head_img, sync_flag, status, sync_student_code, sync_school_code, sync_class_code, 
+    sync_student_id, crt_date
+    from sys_student
+    <where>
+      status = 1
+      <if test="studentCode != null and studentCode != ''">
+        and student_code = #{studentCode}
+      </if>
+      <if test="studentName != null and studentName != ''">
+        and student_name = #{studentName}
+      </if>
+      <if test="age != null">
+        and age = #{age}
+      </if>
+      <if test="sex != null">
+        and sex = #{sex}
+      </if>
+      <if test="schoolName != null and schoolName != ''">
+        and school_name = #{schoolName}
+      </if>
+      <if test="gradeCode != null and gradeCode != ''">
+        and grade_code = #{gradeCode}
+      </if>
+      <if test="studentNamePy != null and studentNamePy != ''">
+        and student_name_py = #{studentNamePy}
+      </if>
+      <if test="headImg != null and headImg != ''">
+        and head_img = #{headImg}
+      </if>
+      <if test="syncFlag != null">
+        and sync_flag = #{syncFlag}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="syncStudentCode != null and syncStudentCode != ''">
+        and sync_student_code = #{syncStudentCode}
+      </if>
+      <if test="syncSchoolCode != null and syncSchoolCode != ''">
+        and sync_school_code = #{syncSchoolCode}
+      </if>
+      <if test="syncClassCode != null and syncClassCode != ''">
+        and sync_class_code = #{syncClassCode}
+      </if>
+      <if test="syncStudentId != null and syncStudentId != ''">
+        and sync_student_id = #{syncStudentId}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sys_student (student_id, student_code,
+      student_name, age, sex, 
+      school_name, grade_code, student_name_py, 
+      head_img, sync_flag, status, 
+      sync_student_code, sync_school_code, 
+      sync_class_code, sync_student_id, 
+      crt_date
+    ) values <foreach collection="list" item="item" separator=",">(#{item.studentId,jdbcType=VARCHAR}, #{item.studentCode,jdbcType=VARCHAR},
+      #{item.studentName,jdbcType=VARCHAR}, #{item.age,jdbcType=TINYINT}, #{item.sex,jdbcType=TINYINT}, 
+      #{item.schoolName,jdbcType=VARCHAR}, #{item.gradeCode,jdbcType=VARCHAR}, #{item.studentNamePy,jdbcType=VARCHAR}, 
+      #{item.headImg,jdbcType=VARCHAR}, #{item.syncFlag,jdbcType=TINYINT}, #{item.status,jdbcType=TINYINT}, 
+      #{item.syncStudentCode,jdbcType=VARCHAR}, #{item.syncSchoolCode,jdbcType=VARCHAR}, 
+      #{item.syncClassCode,jdbcType=VARCHAR}, #{item.syncStudentId,jdbcType=VARCHAR}, 
+      #{item.crtDate,jdbcType=TIMESTAMP})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from sys_student
+    where student_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+
+  <update id="updateStatus" parameterType="java.util.List">
+    update sys_student set status = 0
+    where student_id in
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </update>
+
+  <select id="getAllSduByParentId" parameterType="java.lang.String" resultMap="BaseResultVOMap">
+    select
+          ss.student_id,
+          ss.student_code,
+          ss.student_name,
+          ss.age,
+          ss.sex,
+          ss.school_name,
+          ss.grade_code,
+          ss.student_name_py,
+          ss.head_img,
+          ss.sync_flag,
+          ss.sync_student_code,
+          ss.sync_school_code,
+          ss.sync_class_code,
+          ss.sync_student_id,
+          ssg.stage_id
+    from sys_student ss
+    LEFT JOIN sys_stage_grade ssg on ss.grade_code = ssg.grade_id
+    RIGHT JOIN sys_student_parent sp on ss.student_id = sp.student_id
+    where sp.parent_id = #{id}
+    and ss.status = 1
+  </select>
+
+  <update id="unBindStudentInfo" parameterType="java.lang.String">
+     update sys_student
+     set
+        sync_flag = 0,
+        sync_student_code = null,
+        sync_school_code = null,
+        sync_class_code = null,
+        sync_student_id = null
+     where student_id = #{studentId}
+  </update>
+</mapper>

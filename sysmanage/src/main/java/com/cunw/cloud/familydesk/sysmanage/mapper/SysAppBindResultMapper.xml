@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysAppBindResultMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysAppBindResult">
+    <id column="bind_result_id" jdbcType="VARCHAR" property="bindResultId" />
+    <result column="accessToken" jdbcType="VARCHAR" property="accessToken" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="expired_time" jdbcType="INTEGER" property="expiredTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="device_id" jdbcType="VARCHAR" property="deviceId" />
+    <result column="refreshToken" jdbcType="VARCHAR" property="refreshToken" />
+    <result column="upt_date" jdbcType="TIMESTAMP" property="updDate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_app_bind_result
+    where bind_result_id = #{bindResultId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from sys_app_bind_result
+    where 1!=1 
+      <if test="accessToken != null and accessToken != ''">
+        and accessToken = #{accessToken}
+      </if>
+      <if test="parentId != null and parentId != ''">
+        and parent_id = #{parentId}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="expiredTime != null">
+        and expired_time = #{expiredTime}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="deviceId != null and deviceId != ''">
+        and device_id = #{deviceId}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysAppBindResult">
+    insert into sys_app_bind_result (bind_result_id, accessToken, parent_id, 
+      crt_date, expired_time, status, 
+      device_id,refreshToken)
+    values (#{bindResultId,jdbcType=VARCHAR}, #{accessToken,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR},
+      #{crtDate,jdbcType=TIMESTAMP}, #{expiredTime,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{deviceId,jdbcType=VARCHAR},#{refreshToken,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysAppBindResult">
+    insert into sys_app_bind_result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bindResultId != null">
+        bind_result_id,
+      </if>
+      <if test="accessToken != null">
+        accessToken,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="expiredTime != null">
+        expired_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="refreshToken != null">
+        refreshToken,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bindResultId != null">
+        #{bindResultId,jdbcType=VARCHAR},
+      </if>
+      <if test="accessToken != null">
+        #{accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expiredTime != null">
+        #{expiredTime,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="refreshToken != null">
+        #{refreshToken,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysAppBindResult">
+    update sys_app_bind_result
+    set accessToken = #{accessToken,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      expired_time = #{expiredTime,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      device_id = #{deviceId,jdbcType=VARCHAR}
+    where bind_result_id = #{bindResultId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.SysAppBindResult">
+    update sys_app_bind_result
+    <set>
+      <if test="accessToken != null">
+        accessToken = #{accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expiredTime != null">
+        expired_time = #{expiredTime,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bind_result_id = #{bindResultId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select bind_result_id, accessToken, parent_id, crt_date, expired_time, status, device_id,refreshToken,upd_date
+    from sys_app_bind_result
+    where bind_result_id = #{bindResultId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select bind_result_id, accessToken, parent_id, crt_date, expired_time, status, device_id,refreshToken,upd_date
+    from sys_app_bind_result
+    <where> 
+      <if test="accessToken != null and accessToken != ''">
+        and accessToken = #{accessToken}
+      </if>
+      <if test="parentId != null and parentId != ''">
+        and parent_id = #{parentId}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="expiredTime != null">
+        and expired_time = #{expiredTime}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="deviceId != null and deviceId != ''">
+        and device_id = #{deviceId}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sys_app_bind_result (bind_result_id, 
+      accessToken, parent_id, crt_date, 
+      expired_time, status, device_id
+      
+    ) values <foreach collection="list" item="item" separator=",">(#{item.bindResultId,jdbcType=VARCHAR}, 
+      #{item.accessToken,jdbcType=VARCHAR}, #{item.parentId,jdbcType=VARCHAR}, #{item.crtDate,jdbcType=TIMESTAMP},
+      #{item.expiredTime,jdbcType=INTEGER}, #{item.status,jdbcType=TINYINT}, #{item.deviceId,jdbcType=VARCHAR}
+      )</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from sys_app_bind_result
+    where bind_result_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+
+  <select id="getAppBindResult" parameterType="String" resultMap="BaseResultMap">
+    select
+      bind_result_id,
+      parent_id
+    from sys_app_bind_result s
+    where s.device_id = #{deviceId}
+    and s.`status` = 1
+    and
+    <!--
+       比较的 数据产生的时间 + expired_time 是否超过当前时间 若超过 则认为数据已失效
+       则当表达式的值 小于 0 代表 数据有效   大于0 则数据失效
+       -->
+      TIMESTAMPDIFF(
+            MINUTE,
+            DATE_FORMAT(
+                        date_add(s.crt_date, interval s.expired_time minute),'%Y-%m-%d %H:%i:%s'
+                      ),
+            DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')) &lt;= 0
+    order by s.crt_date desc
+    limit 1
+  </select>
+
+  <update id="updateAppBindResult" parameterType="com.cunw.cloud.familydesk.common.model.SysAppBindResult">
+      update sys_app_bind_result
+         set
+          accessToken = #{accessToken},
+          refreshToken = #{refreshToken},
+          upd_date = now(),
+          status = 0
+      where bind_result_id = #{id} and status = 1
+  </update>
+</mapper>

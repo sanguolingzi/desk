@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysSchedulerJobMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysSchedulerJob">
+    <id column="job_id" jdbcType="VARCHAR" property="jobId" />
+    <result column="job_name" jdbcType="VARCHAR" property="jobName" />
+    <result column="job_group" jdbcType="VARCHAR" property="jobGroup" />
+    <result column="job_desc" jdbcType="VARCHAR" property="jobDesc" />
+    <result column="pro_class" jdbcType="VARCHAR" property="proClass" />
+    <result column="job_type" jdbcType="VARCHAR" property="jobType" />
+    <result column="job_cron" jdbcType="VARCHAR" property="jobCron" />
+    <result column="job_status" jdbcType="VARCHAR" property="jobStatus" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="last_status" jdbcType="VARCHAR" property="lastStatus" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="crt_user_code" jdbcType="VARCHAR" property="crtUserCode" />
+    <result column="crt_org_code" jdbcType="VARCHAR" property="crtOrgCode" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="upd_user_code" jdbcType="VARCHAR" property="updUserCode" />
+    <result column="upd_org_code" jdbcType="VARCHAR" property="updOrgCode" />
+    <result column="upd_date" jdbcType="TIMESTAMP" property="updDate" />
+
+    <result column="work_when_start" jdbcType="TINYINT" property="workWhenStart" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_scheduler_job
+    where job_id = #{jobId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysSchedulerJob">
+    insert into sys_scheduler_job (job_id, job_name, job_group, 
+      job_desc, pro_class, job_type, 
+      job_cron, job_status, start_time, 
+      last_status, status, crt_user_code, 
+      crt_org_code, crt_date, upd_user_code, 
+      upd_org_code, upd_date)
+    values (#{jobId,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR}, #{jobGroup,jdbcType=VARCHAR}, 
+      #{jobDesc,jdbcType=VARCHAR}, #{proClass,jdbcType=VARCHAR}, #{jobType,jdbcType=VARCHAR}, 
+      #{jobCron,jdbcType=VARCHAR}, #{jobStatus,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{lastStatus,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{crtUserCode,jdbcType=VARCHAR}, 
+      #{crtOrgCode,jdbcType=VARCHAR}, #{crtDate,jdbcType=TIMESTAMP}, #{updUserCode,jdbcType=VARCHAR}, 
+      #{updOrgCode,jdbcType=VARCHAR}, #{updDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysSchedulerJob">
+    insert into sys_scheduler_job
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jobId != null">
+        job_id,
+      </if>
+      <if test="jobName != null">
+        job_name,
+      </if>
+      <if test="jobGroup != null">
+        job_group,
+      </if>
+      <if test="jobDesc != null">
+        job_desc,
+      </if>
+      <if test="proClass != null">
+        pro_class,
+      </if>
+      <if test="jobType != null">
+        job_type,
+      </if>
+      <if test="jobCron != null">
+        job_cron,
+      </if>
+      <if test="jobStatus != null">
+        job_status,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="lastStatus != null">
+        last_status,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code,
+      </if>
+      <if test="crtOrgCode != null">
+        crt_org_code,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="updUserCode != null">
+        upd_user_code,
+      </if>
+      <if test="updOrgCode != null">
+        upd_org_code,
+      </if>
+      <if test="updDate != null">
+        upd_date,
+      </if>
+      <if test="workWhenStart != null">
+        work_when_start,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jobId != null">
+        #{jobId,jdbcType=VARCHAR},
+      </if>
+      <if test="jobName != null">
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobGroup != null">
+        #{jobGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDesc != null">
+        #{jobDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="proClass != null">
+        #{proClass,jdbcType=VARCHAR},
+      </if>
+      <if test="jobType != null">
+        #{jobType,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCron != null">
+        #{jobCron,jdbcType=VARCHAR},
+      </if>
+      <if test="jobStatus != null">
+        #{jobStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastStatus != null">
+        #{lastStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="crtUserCode != null">
+        #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtOrgCode != null">
+        #{crtOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updUserCode != null">
+        #{updUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updOrgCode != null">
+        #{updOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updDate != null">
+        #{updDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workWhenStart != null">
+        #{workWhenStart,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysSchedulerJob">
+    update sys_scheduler_job
+    set job_name = #{jobName,jdbcType=VARCHAR},
+      job_group = #{jobGroup,jdbcType=VARCHAR},
+      job_desc = #{jobDesc,jdbcType=VARCHAR},
+      pro_class = #{proClass,jdbcType=VARCHAR},
+      job_type = #{jobType,jdbcType=VARCHAR},
+      job_cron = #{jobCron,jdbcType=VARCHAR},
+      job_status = #{jobStatus,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      last_status = #{lastStatus,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+      crt_org_code = #{crtOrgCode,jdbcType=VARCHAR},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      upd_user_code = #{updUserCode,jdbcType=VARCHAR},
+      upd_org_code = #{updOrgCode,jdbcType=VARCHAR},
+      upd_date = #{updDate,jdbcType=TIMESTAMP}
+    where job_id = #{jobId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.SysSchedulerJob">
+    update sys_scheduler_job
+    <set>
+      <if test="jobName != null">
+        job_name = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobGroup != null">
+        job_group = #{jobGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDesc != null">
+        job_desc = #{jobDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="proClass != null">
+        pro_class = #{proClass,jdbcType=VARCHAR},
+      </if>
+      <if test="jobType != null">
+        job_type = #{jobType,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCron != null">
+        job_cron = #{jobCron,jdbcType=VARCHAR},
+      </if>
+      <if test="jobStatus != null">
+        job_status = #{jobStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastStatus != null">
+        last_status = #{lastStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtOrgCode != null">
+        crt_org_code = #{crtOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updUserCode != null">
+        upd_user_code = #{updUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updOrgCode != null">
+        upd_org_code = #{updOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updDate != null">
+        upd_date = #{updDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where job_id = #{jobId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select job_id, job_name, job_group, job_desc, pro_class, job_type, job_cron, job_status, 
+    start_time, last_status, status, crt_user_code, crt_org_code, crt_date, upd_user_code, 
+    upd_org_code, upd_date,work_when_start
+    from sys_scheduler_job
+    where job_id = #{jobId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select job_id, job_name, job_group, job_desc, pro_class, job_type, job_cron, job_status, 
+    start_time, last_status, status, crt_user_code, crt_org_code, crt_date, upd_user_code, 
+    upd_org_code, upd_date,work_when_start
+    from sys_scheduler_job
+    <where> 
+      <if test="jobName != null and jobName != ''">
+        and job_name = #{jobName}
+      </if>
+      <if test="jobGroup != null and jobGroup != ''">
+        and job_group = #{jobGroup}
+      </if>
+      <if test="jobDesc != null and jobDesc != ''">
+        and job_desc = #{jobDesc}
+      </if>
+      <if test="proClass != null and proClass != ''">
+        and pro_class = #{proClass}
+      </if>
+      <if test="jobType != null and jobType != ''">
+        and job_type = #{jobType}
+      </if>
+      <if test="jobCron != null and jobCron != ''">
+        and job_cron = #{jobCron}
+      </if>
+      <if test="jobStatus != null and jobStatus != ''">
+        and job_status = #{jobStatus}
+      </if>
+      <if test="startTime != null">
+        and start_time = #{startTime}
+      </if>
+      <if test="lastStatus != null and lastStatus != ''">
+        and last_status = #{lastStatus}
+      </if>
+      <if test="status != null and status != ''">
+        and status = #{status}
+      </if>
+      <if test="crtUserCode != null and crtUserCode != ''">
+        and crt_user_code = #{crtUserCode}
+      </if>
+      <if test="crtOrgCode != null and crtOrgCode != ''">
+        and crt_org_code = #{crtOrgCode}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="updUserCode != null and updUserCode != ''">
+        and upd_user_code = #{updUserCode}
+      </if>
+      <if test="updOrgCode != null and updOrgCode != ''">
+        and upd_org_code = #{updOrgCode}
+      </if>
+      <if test="updDate != null">
+        and upd_date = #{updDate}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sys_scheduler_job (job_id, 
+      job_name, job_group, job_desc, 
+      pro_class, job_type, job_cron, 
+      job_status, start_time, last_status, 
+      status, crt_user_code, crt_org_code, 
+      crt_date, upd_user_code, upd_org_code, 
+      upd_date
+    ) values <foreach collection="list" item="item" separator=",">(#{item.jobId,jdbcType=VARCHAR}, 
+      #{item.jobName,jdbcType=VARCHAR}, #{item.jobGroup,jdbcType=VARCHAR}, #{item.jobDesc,jdbcType=VARCHAR}, 
+      #{item.proClass,jdbcType=VARCHAR}, #{item.jobType,jdbcType=VARCHAR}, #{item.jobCron,jdbcType=VARCHAR}, 
+      #{item.jobStatus,jdbcType=VARCHAR}, #{item.startTime,jdbcType=TIMESTAMP}, #{item.lastStatus,jdbcType=VARCHAR}, 
+      #{item.status,jdbcType=VARCHAR}, #{item.crtUserCode,jdbcType=VARCHAR}, #{item.crtOrgCode,jdbcType=VARCHAR}, 
+      #{item.crtDate,jdbcType=TIMESTAMP}, #{item.updUserCode,jdbcType=VARCHAR}, #{item.updOrgCode,jdbcType=VARCHAR}, 
+      #{item.updDate,jdbcType=TIMESTAMP})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from sys_scheduler_job
+    where job_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      ${id}
+    </foreach>
+  </delete>
+
+  <update id="updateJobWorkTime" parameterType="com.cunw.cloud.familydesk.common.model.SysSchedulerJob">
+    update sys_scheduler_job
+    SET
+       upd_date = now(),
+       last_status = #{lastStatus}
+    where job_name = #{jobName}
+    and job_group = #{jobGroup}
+    and status = 1
+  </update>
+</mapper>

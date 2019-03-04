@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysApplicationStudentMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysApplicationStudent">
+    <id column="app_stu_id" jdbcType="VARCHAR" property="appStuId" />
+    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="app_id" jdbcType="VARCHAR" property="appId" />
+    <result column="desk_id" jdbcType="VARCHAR" property="deskId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="do_evaluate" jdbcType="TINYINT" property="doEvaluate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_application_student
+    where app_stu_id = #{appStuId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from sys_application_student
+    where 1!=1 
+      <if test="studentId != null and studentId != ''">
+        and student_id = #{studentId}
+      </if>
+      <if test="appId != null and appId != ''">
+        and app_id = #{appId}
+      </if>
+      <if test="deskId != null and deskId != ''">
+        and desk_id = #{deskId}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="doEvaluate != null">
+        and do_evaluate = #{doEvaluate}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationStudent">
+    insert into sys_application_student (app_stu_id, student_id, app_id, 
+      desk_id, status, crt_date, 
+      do_evaluate)
+    values (#{appStuId,jdbcType=VARCHAR}, #{studentId,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, 
+      #{deskId,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{crtDate,jdbcType=TIMESTAMP}, 
+      #{doEvaluate,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationStudent">
+    insert into sys_application_student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="appStuId != null">
+        app_stu_id,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="deskId != null">
+        desk_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="doEvaluate != null">
+        do_evaluate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="appStuId != null">
+        #{appStuId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="deskId != null">
+        #{deskId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="doEvaluate != null">
+        #{doEvaluate,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationStudent">
+    update sys_application_student
+    set student_id = #{studentId,jdbcType=VARCHAR},
+      app_id = #{appId,jdbcType=VARCHAR},
+      desk_id = #{deskId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      do_evaluate = #{doEvaluate,jdbcType=TINYINT}
+    where app_stu_id = #{appStuId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationStudent">
+    update sys_application_student
+    <set>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="deskId != null">
+        desk_id = #{deskId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="doEvaluate != null">
+        do_evaluate = #{doEvaluate,jdbcType=TINYINT},
+      </if>
+    </set>
+    where app_stu_id = #{appStuId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select app_stu_id, student_id, app_id, desk_id, status, crt_date, do_evaluate
+    from sys_application_student
+    where app_stu_id = #{appStuId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select app_stu_id, student_id, app_id, desk_id, status, crt_date, do_evaluate
+    from sys_application_student
+    <where> 
+      <if test="studentId != null and studentId != ''">
+        and student_id = #{studentId}
+      </if>
+      <if test="appId != null and appId != ''">
+        and app_id = #{appId}
+      </if>
+      <if test="deskId != null and deskId != ''">
+        and desk_id = #{deskId}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="doEvaluate != null">
+        and do_evaluate = #{doEvaluate}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sys_application_student (app_stu_id, 
+      student_id, app_id, desk_id, 
+      status, crt_date, do_evaluate
+      
+    ) values <foreach collection="list" item="item" separator=",">(#{item.appStuId,jdbcType=VARCHAR}, 
+      #{item.studentId,jdbcType=VARCHAR}, #{item.appId,jdbcType=VARCHAR}, #{item.deskId,jdbcType=VARCHAR}, 
+      #{item.status,jdbcType=TINYINT}, #{item.crtDate,jdbcType=TIMESTAMP}, #{item.doEvaluate,jdbcType=TINYINT}
+      )</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from sys_application_student
+    where app_stu_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+
+  <update id="updateByAppIdAndStudentId" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationStudent">
+       update sys_application_student
+       SET
+          status = 0
+       where
+            student_id = #{studentId}
+       and  app_id = #{appId}
+  </update>
+
+  <select id="selectForPage" parameterType="java.util.HashMap" resultType="com.cunw.cloud.familydesk.common.model.SysApplicationCenterVO">
+    SELECT
+        c.app_id "appId",
+        c.app_desc "appDesc",
+        c.App_Name "appName",
+        CONCAT(#{serverPath},c.app_logo) 'appLogo',
+        c.app_recommend "appRecommend",
+        c.crt_date "crtDate",
+        c.package_name "packageName",
+        d.download "downloadNum",
+        ROUND(record.app_size/1024,2) "appSize",
+        record.version
+    FROM
+        sys_application_student sas
+    LEFT JOIN sys_application_center c ON sas.app_id = c.app_id
+    LEFT JOIN sys_application_data d ON c.app_id = d.app_id
+    left join
+    (
+      select
+        app_id,
+        version,
+        app_size,
+        crt_date "updateRecordDate"
+      from sys_application_update_record
+      where status = 1
+    ) record on record.app_id = c.app_id
+    WHERE c. STATUS = 1
+    and sas.status = 1
+    and sas.student_id =#{studentId}
+    <if test="appId != null and  appId!= '' ">
+      and c.app_id = #{appId}
+    </if>
+    <if test="stageId != null and  stageId!= ''   ">
+      and c.stage_id = #{stageId}
+    </if>
+    <if test="appCategoryId != null and appCategoryId != ''">
+      and c.app_category_id = #{appCategoryId}
+    </if>
+    <if test="appName != null and appName != ''">
+      and c.app_name LIKE CONCAT('%',#{appName},'%')
+    </if>
+    order by  sas.crt_date  desc
+  </select>
+
+</mapper>

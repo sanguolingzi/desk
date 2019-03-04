@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysApplicationImgMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysApplicationImg">
+    <id column="app_img_id" jdbcType="VARCHAR" property="appImgId" />
+    <result column="app_id" jdbcType="VARCHAR" property="appId" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="file_id" jdbcType="VARCHAR" property="fileId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_application_img
+    where app_img_id = #{appImgId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from sys_application_img
+    where 1!=1 
+      <if test="appId != null and appId != ''">
+        and app_id = #{appId}
+      </if>
+      <if test="imgUrl != null and imgUrl != ''">
+        and img_url = #{imgUrl}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="fileId != null and fileId != ''">
+        and file_id = #{fileId}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationImg">
+    insert into sys_application_img (app_img_id, app_id, img_url, 
+      status, file_id)
+    values (#{appImgId,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{fileId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationImg">
+    insert into sys_application_img
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="appImgId != null">
+        app_img_id,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="imgUrl != null">
+        img_url,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="fileId != null">
+        file_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="appImgId != null">
+        #{appImgId,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="fileId != null">
+        #{fileId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationImg">
+    update sys_application_img
+    set app_id = #{appId,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      file_id = #{fileId,jdbcType=VARCHAR}
+    where app_img_id = #{appImgId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateStatus" parameterType="java.lang.String" >
+    update sys_application_img
+    set      status = 0
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationImg">
+    update sys_application_img
+    <set>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="fileId != null">
+        file_id = #{fileId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where app_img_id = #{appImgId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select app_img_id, app_id, img_url, status, file_id
+    from sys_application_img
+    where app_img_id = #{appImgId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select app_img_id, app_id, img_url, status, file_id
+    from sys_application_img
+    <where> 
+      <if test="appId != null and appId != ''">
+        and app_id = #{appId}
+      </if>
+      <if test="imgUrl != null and imgUrl != ''">
+        and img_url = #{imgUrl}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="fileId != null and fileId != ''">
+        and file_id = #{fileId}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sys_application_img (app_img_id, 
+      app_id, img_url, status, 
+      file_id
+    ) values <foreach collection="list" item="item" separator=",">(#{item.appImgId,jdbcType=VARCHAR}, 
+      #{item.appId,jdbcType=VARCHAR}, #{item.imgUrl,jdbcType=VARCHAR}, #{item.status,jdbcType=TINYINT}, 
+      #{item.fileId,jdbcType=VARCHAR})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from sys_application_img
+    where app_img_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

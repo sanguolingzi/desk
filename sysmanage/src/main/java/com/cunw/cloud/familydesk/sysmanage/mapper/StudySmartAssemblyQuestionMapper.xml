@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.StudySmartAssemblyQuestionMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.StudySmartAssemblyQuestion">
+    <id column="assembly_quest_id" jdbcType="VARCHAR" property="assemblyQuestId" />
+    <result column="assembly_id" jdbcType="VARCHAR" property="assemblyId" />
+    <result column="quest_id" jdbcType="VARCHAR" property="questId" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
+    <result column="quest_order" jdbcType="INTEGER" property="questOrder" />
+    <result column="is_right" jdbcType="TINYINT" property="isRight" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="answer_time" jdbcType="TIMESTAMP" property="answerTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from study_smart_assembly_question
+    where assembly_quest_id = #{assemblyQuestId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from study_smart_assembly_question
+    where 1!=1 
+      <if test="assemblyId != null and assemblyId != ''">
+        and assembly_id = #{assemblyId}
+      </if>
+      <if test="questId != null and questId != ''">
+        and quest_id = #{questId}
+      </if>
+      <if test="answer != null and answer != ''">
+        and answer = #{answer}
+      </if>
+      <if test="questOrder != null">
+        and quest_order = #{questOrder}
+      </if>
+      <if test="isRight != null">
+        and is_right = #{isRight}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="answerTime != null">
+        and answer_time = #{answerTime}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.StudySmartAssemblyQuestion">
+    insert into study_smart_assembly_question (assembly_quest_id, assembly_id, quest_id, 
+      answer, quest_order, is_right, 
+      status, answer_time)
+    values (#{assemblyQuestId,jdbcType=VARCHAR}, #{assemblyId,jdbcType=VARCHAR}, #{questId,jdbcType=VARCHAR}, 
+      #{answer,jdbcType=VARCHAR}, #{questOrder,jdbcType=INTEGER}, #{isRight,jdbcType=TINYINT}, 
+      #{status,jdbcType=TINYINT}, #{answerTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.StudySmartAssemblyQuestion">
+    insert into study_smart_assembly_question
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="assemblyQuestId != null">
+        assembly_quest_id,
+      </if>
+      <if test="assemblyId != null">
+        assembly_id,
+      </if>
+      <if test="questId != null">
+        quest_id,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="questOrder != null">
+        quest_order,
+      </if>
+      <if test="isRight != null">
+        is_right,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="answerTime != null">
+        answer_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="assemblyQuestId != null">
+        #{assemblyQuestId,jdbcType=VARCHAR},
+      </if>
+      <if test="assemblyId != null">
+        #{assemblyId,jdbcType=VARCHAR},
+      </if>
+      <if test="questId != null">
+        #{questId,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="questOrder != null">
+        #{questOrder,jdbcType=INTEGER},
+      </if>
+      <if test="isRight != null">
+        #{isRight,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="answerTime != null">
+        #{answerTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.StudySmartAssemblyQuestion">
+    update study_smart_assembly_question
+    set assembly_id = #{assemblyId,jdbcType=VARCHAR},
+      quest_id = #{questId,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      quest_order = #{questOrder,jdbcType=INTEGER},
+      is_right = #{isRight,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      answer_time = #{answerTime,jdbcType=TIMESTAMP}
+    where assembly_quest_id = #{assemblyQuestId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.StudySmartAssemblyQuestion">
+    update study_smart_assembly_question
+    <set>
+      <if test="assemblyId != null">
+        assembly_id = #{assemblyId,jdbcType=VARCHAR},
+      </if>
+      <if test="questId != null">
+        quest_id = #{questId,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="questOrder != null">
+        quest_order = #{questOrder,jdbcType=INTEGER},
+      </if>
+      <if test="isRight != null">
+        is_right = #{isRight,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="answerTime != null">
+        answer_time = #{answerTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where assembly_quest_id = #{assemblyQuestId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select assembly_quest_id, assembly_id, quest_id, answer, quest_order, is_right, status, 
+    answer_time
+    from study_smart_assembly_question
+    where assembly_quest_id = #{assemblyQuestId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select assembly_quest_id, assembly_id, quest_id, answer, quest_order, is_right, status, 
+    answer_time
+    from study_smart_assembly_question
+    <where> 
+      <if test="assemblyId != null and assemblyId != ''">
+        and assembly_id = #{assemblyId}
+      </if>
+      <if test="questId != null and questId != ''">
+        and quest_id = #{questId}
+      </if>
+      <if test="answer != null and answer != ''">
+        and answer = #{answer}
+      </if>
+      <if test="questOrder != null">
+        and quest_order = #{questOrder}
+      </if>
+      <if test="isRight != null">
+        and is_right = #{isRight}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="answerTime != null">
+        and answer_time = #{answerTime}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into study_smart_assembly_question (assembly_quest_id, 
+      assembly_id, quest_id, answer, 
+      quest_order, is_right, status, 
+      answer_time
+    ) values <foreach collection="list" item="item" separator=",">(#{item.assemblyQuestId,jdbcType=VARCHAR}, 
+      #{item.assemblyId,jdbcType=VARCHAR}, #{item.questId,jdbcType=VARCHAR}, #{item.answer,jdbcType=VARCHAR}, 
+      #{item.questOrder,jdbcType=INTEGER}, #{item.isRight,jdbcType=TINYINT}, #{item.status,jdbcType=TINYINT}, 
+      #{item.answerTime,jdbcType=TIMESTAMP})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from study_smart_assembly_question
+    where assembly_quest_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      ${id}
+    </foreach>
+  </delete>
+
+  <select id="selectByQuestId" parameterType="java.util.List" resultMap="BaseResultMap">
+    select assembly_id,quest_order, is_right
+    from study_smart_assembly_question
+    where quest_id in
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      ${id}
+    </foreach>
+    ORDER BY quest_order
+  </select>
+</mapper>

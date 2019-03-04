@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.StudyExamTestAnswerMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.StudyExamTestAnswer">
+    <id column="answer_id" jdbcType="VARCHAR" property="answerId" />
+    <result column="test_id" jdbcType="VARCHAR" property="testId" />
+    <result column="student_code" jdbcType="VARCHAR" property="studentCode" />
+    <result column="quest_id" jdbcType="VARCHAR" property="questId" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
+    <result column="quest_order" jdbcType="INTEGER" property="questOrder" />
+    <result column="is_right" jdbcType="TINYINT" property="isRight" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="answer_time" jdbcType="TIMESTAMP" property="answerTime" />
+  </resultMap>
+  <resultMap id="MonthResultMap" type="com.cunw.cloud.familydesk.common.model.TestAnswer">
+    <result column="is_right" jdbcType="VARCHAR" property="isRight" />
+    <result column="question_count" jdbcType="INTEGER" property="questionCount" />
+    <result column="answer_date" jdbcType="VARCHAR" property="answerDate" />
+  </resultMap>
+  <resultMap id="RankResultMap" type="com.cunw.cloud.familydesk.common.model.QuestionRankCount">
+    <result column="rank" jdbcType="INTEGER" property="rank" />
+    <result column="rank_name" jdbcType="VARCHAR" property="rankName" />
+    <result column="sum_star" jdbcType="INTEGER" property="sumStar" />
+  </resultMap>
+  <resultMap id="KnowledgeMasterResultMap" type="com.cunw.cloud.familydesk.common.model.KnowledgeMasterCount">
+    <result column="knowledge_id" jdbcType="VARCHAR" property="knowledgeId" />
+    <result column="point_value" jdbcType="INTEGER" property="pointValue" />
+  </resultMap>
+  <select id="getMonthTestAnswerCount" parameterType="java.util.HashMap" resultMap="MonthResultMap">
+    select date_format(sta.answer_time, '%Y-%c-%d') as answer_date, (CASE sta.is_right WHEN 1 THEN '答对' ELSE '答错' END ) as is_right, count(*) as question_count from study_test_answer sta
+    where sta.test_id in
+    (
+      select st.test_id from study_test st
+      where st.student_code = #{studentCode}
+    )
+    AND date_format(sta.answer_time, '%Y-%c-%d') between  (select DATE_ADD(curdate(),interval -day(curdate())+1 day)) and curdate()
+    group by answer_date, sta.is_right
+    union all
+    SELECT date_format(seta.answer_time, '%Y-%c-%d') as answer_date, (CASE seta.is_right WHEN 1 THEN '答对' ELSE '答错' END) as is_right, count(*) as question_count FROM study_exam_test_answer seta
+    WHERE seta.test_id in
+    (
+    SELECT sett.test_id from study_exam_test sett where sett.student_code = #{studentCode}
+    )
+    AND date_format(seta.answer_time, '%Y-%c-%d') between  (select DATE_ADD(curdate(),interval -day(curdate())+1 day)) and curdate()
+    GROUP BY answer_date,seta.is_right;
+  </select>
+
+  <select id="getTestAnswerQuestionIds" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select sta.quest_id from study_test_answer sta where sta.test_id in
+    (
+      select st.test_id from study_test st
+      LEFT JOIN study_material_master smm ON st.master_id = smm.master_id
+      LEFT JOIN study_knowledge_master skm ON st.master_id = skm.master_id
+      where st.student_code = #{studentCode}
+      AND CASE WHEN st.type = 0 THEN smm.subject_id = #{subjectId} ELSE skm.subject_id = #{subjectId} END
+    )
+    union all
+    SELECT seta.quest_id from study_exam_test_answer seta WHERE seta.test_id in
+    (
+      SELECT sett.test_id from study_exam_test sett where sett.student_code = #{studentCode} and sett.subject_id = #{subjectId}
+    )
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from study_exam_test_answer
+    where answer_id = #{answerId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from study_exam_test_answer
+    where 1!=1 
+      <if test="testId != null and testId != ''">
+        and test_id = #{testId}
+      </if>
+      <if test="studentCode != null and studentCode != ''">
+        and student_code = #{studentCode}
+      </if>
+      <if test="questId != null and questId != ''">
+        and quest_id = #{questId}
+      </if>
+      <if test="answer != null and answer != ''">
+        and answer = #{answer}
+      </if>
+      <if test="questOrder != null">
+        and quest_order = #{questOrder}
+      </if>
+      <if test="isRight != null">
+        and is_right = #{isRight}
+      </if>
+      <if test="score != null">
+        and score = #{score}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="answerTime != null">
+        and answer_time = #{answerTime}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.StudyExamTestAnswer">
+    insert into study_exam_test_answer (answer_id, test_id, student_code, 
+      quest_id, answer, quest_order, 
+      is_right, score, status, 
+      answer_time)
+    values (#{answerId,jdbcType=VARCHAR}, #{testId,jdbcType=VARCHAR}, #{studentCode,jdbcType=VARCHAR}, 
+      #{questId,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, #{questOrder,jdbcType=INTEGER}, 
+      #{isRight,jdbcType=TINYINT}, #{score,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{answerTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.StudyExamTestAnswer">
+    insert into study_exam_test_answer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="answerId != null">
+        answer_id,
+      </if>
+      <if test="testId != null">
+        test_id,
+      </if>
+      <if test="studentCode != null">
+        student_code,
+      </if>
+      <if test="questId != null">
+        quest_id,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="questOrder != null">
+        quest_order,
+      </if>
+      <if test="isRight != null">
+        is_right,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="answerTime != null">
+        answer_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="answerId != null">
+        #{answerId,jdbcType=VARCHAR},
+      </if>
+      <if test="testId != null">
+        #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCode != null">
+        #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questId != null">
+        #{questId,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="questOrder != null">
+        #{questOrder,jdbcType=INTEGER},
+      </if>
+      <if test="isRight != null">
+        #{isRight,jdbcType=TINYINT},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="answerTime != null">
+        #{answerTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.StudyExamTestAnswer">
+    update study_exam_test_answer
+    set test_id = #{testId,jdbcType=VARCHAR},
+      student_code = #{studentCode,jdbcType=VARCHAR},
+      quest_id = #{questId,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      quest_order = #{questOrder,jdbcType=INTEGER},
+      is_right = #{isRight,jdbcType=TINYINT},
+      score = #{score,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      answer_time = #{answerTime,jdbcType=TIMESTAMP}
+    where answer_id = #{answerId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.StudyExamTestAnswer">
+    update study_exam_test_answer
+    <set>
+      <if test="testId != null">
+        test_id = #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCode != null">
+        student_code = #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questId != null">
+        quest_id = #{questId,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="questOrder != null">
+        quest_order = #{questOrder,jdbcType=INTEGER},
+      </if>
+      <if test="isRight != null">
+        is_right = #{isRight,jdbcType=TINYINT},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="answerTime != null">
+        answer_time = #{answerTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where answer_id = #{answerId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select answer_id, test_id, student_code, quest_id, answer, quest_order, is_right, 
+    score, status, answer_time
+    from study_exam_test_answer
+    where answer_id = #{answerId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select answer_id, test_id, student_code, quest_id, answer, quest_order, is_right, 
+    score, status, answer_time
+    from study_exam_test_answer
+    <where> 
+      <if test="testId != null and testId != ''">
+        and test_id = #{testId}
+      </if>
+      <if test="studentCode != null and studentCode != ''">
+        and student_code = #{studentCode}
+      </if>
+      <if test="questId != null and questId != ''">
+        and quest_id = #{questId}
+      </if>
+      <if test="answer != null and answer != ''">
+        and answer = #{answer}
+      </if>
+      <if test="questOrder != null">
+        and quest_order = #{questOrder}
+      </if>
+      <if test="isRight != null">
+        and is_right = #{isRight}
+      </if>
+      <if test="score != null">
+        and score = #{score}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="answerTime != null">
+        and answer_time = #{answerTime}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into study_exam_test_answer (answer_id, 
+      test_id, student_code, quest_id, 
+      answer, quest_order, is_right, 
+      score, status, answer_time
+      
+    ) values <foreach collection="list" item="item" separator=",">(#{item.answerId,jdbcType=VARCHAR}, 
+      #{item.testId,jdbcType=VARCHAR}, #{item.studentCode,jdbcType=VARCHAR}, #{item.questId,jdbcType=VARCHAR}, 
+      #{item.answer,jdbcType=VARCHAR}, #{item.questOrder,jdbcType=INTEGER}, #{item.isRight,jdbcType=TINYINT}, 
+      #{item.score,jdbcType=INTEGER}, #{item.status,jdbcType=TINYINT}, #{item.answerTime,jdbcType=TIMESTAMP}
+      )</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from study_exam_test_answer
+    where answer_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      ${id}
+    </foreach>
+  </delete>
+  <select id="selectQuest" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    SELECT sqk.quest_order FROM study_exam_test_answer sqk
+    where sqk.quest_id in
+    <foreach collection="list" item="questId" open="(" close=")" separator=",">
+      ${questId}
+    </foreach>
+  </select>
+</mapper>

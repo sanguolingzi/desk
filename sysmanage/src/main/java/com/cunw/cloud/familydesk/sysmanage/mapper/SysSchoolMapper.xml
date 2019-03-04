@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysSchoolMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysSchool">
+    <id column="school_id" jdbcType="VARCHAR" property="schoolId" />
+    <result column="school_code" jdbcType="VARCHAR" property="schoolCode" />
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="office_addr" jdbcType="VARCHAR" property="officeAddr" />
+    <result column="master" jdbcType="VARCHAR" property="master" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="school_type" jdbcType="VARCHAR" property="schoolType" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_school
+    where school_id = #{schoolId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from sys_school
+    where 1!=1 
+      <if test="schoolCode != null and schoolCode != ''">
+        and school_code = #{schoolCode}
+      </if>
+      <if test="schoolName != null and schoolName != ''">
+        and school_name = #{schoolName}
+      </if>
+      <if test="url != null and url != ''">
+        and url = #{url}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="officeAddr != null and officeAddr != ''">
+        and office_addr = #{officeAddr}
+      </if>
+      <if test="master != null and master != ''">
+        and master = #{master}
+      </if>
+      <if test="contact != null and contact != ''">
+        and contact = #{contact}
+      </if>
+      <if test="schoolType != null and schoolType != ''">
+        and school_type = #{schoolType}
+      </if>
+      <if test="province != null and province != ''">
+        and province = #{province}
+      </if>
+      <if test="city != null and city != ''">
+        and city = #{city}
+      </if>
+      <if test="area != null and area != ''">
+        and area = #{area}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysSchool">
+    insert into sys_school (school_id, school_code, school_name, 
+      url, status, crt_date, 
+      office_addr, master, contact, 
+      school_type, province, city, 
+      area)
+    values (#{schoolId,jdbcType=VARCHAR}, #{schoolCode,jdbcType=VARCHAR}, #{schoolName,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{crtDate,jdbcType=TIMESTAMP}, 
+      #{officeAddr,jdbcType=VARCHAR}, #{master,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, 
+      #{schoolType,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysSchool">
+    insert into sys_school
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="schoolId != null">
+        school_id,
+      </if>
+      <if test="schoolCode != null">
+        school_code,
+      </if>
+      <if test="schoolName != null">
+        school_name,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="officeAddr != null">
+        office_addr,
+      </if>
+      <if test="master != null">
+        master,
+      </if>
+      <if test="contact != null">
+        contact,
+      </if>
+      <if test="schoolType != null">
+        school_type,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolCode != null">
+        #{schoolCode,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolName != null">
+        #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="officeAddr != null">
+        #{officeAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="master != null">
+        #{master,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolType != null">
+        #{schoolType,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysSchool">
+    update sys_school
+    set school_code = #{schoolCode,jdbcType=VARCHAR},
+      school_name = #{schoolName,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      office_addr = #{officeAddr,jdbcType=VARCHAR},
+      master = #{master,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      school_type = #{schoolType,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR}
+    where school_id = #{schoolId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.SysSchool">
+    update sys_school
+    <set>
+      <if test="schoolCode != null">
+        school_code = #{schoolCode,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolName != null">
+        school_name = #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="officeAddr != null">
+        office_addr = #{officeAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="master != null">
+        master = #{master,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolType != null">
+        school_type = #{schoolType,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where school_id = #{schoolId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select school_id, school_code, school_name, url, status, crt_date, office_addr, master, 
+    contact, school_type, province, city, area
+    from sys_school
+    where school_id = #{schoolId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select school_id, school_code, school_name, url, status, crt_date, office_addr, master, 
+    contact, school_type, province, city, area
+    from sys_school
+    <where> 
+      <if test="schoolCode != null and schoolCode != ''">
+        and school_code = #{schoolCode}
+      </if>
+      <if test="schoolName != null and schoolName != ''">
+        and school_name = #{schoolName}
+      </if>
+      <if test="url != null and url != ''">
+        and url = #{url}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="officeAddr != null and officeAddr != ''">
+        and office_addr = #{officeAddr}
+      </if>
+      <if test="master != null and master != ''">
+        and master = #{master}
+      </if>
+      <if test="contact != null and contact != ''">
+        and contact = #{contact}
+      </if>
+      <if test="schoolType != null and schoolType != ''">
+        and school_type = #{schoolType}
+      </if>
+      <if test="province != null and province != ''">
+        and province = #{province}
+      </if>
+      <if test="city != null and city != ''">
+        and city = #{city}
+      </if>
+      <if test="area != null and area != ''">
+        and area = #{area}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sys_school (school_id, 
+      school_code, school_name, url, 
+      status, crt_date, office_addr, 
+      master, contact, school_type, 
+      province, city, area
+      
+    ) values <foreach collection="list" item="item" separator=",">(#{item.schoolId,jdbcType=VARCHAR}, 
+      #{item.schoolCode,jdbcType=VARCHAR}, #{item.schoolName,jdbcType=VARCHAR}, #{item.url,jdbcType=VARCHAR}, 
+      #{item.status,jdbcType=TINYINT}, #{item.crtDate,jdbcType=TIMESTAMP}, #{item.officeAddr,jdbcType=VARCHAR}, 
+      #{item.master,jdbcType=VARCHAR}, #{item.contact,jdbcType=VARCHAR}, #{item.schoolType,jdbcType=VARCHAR}, 
+      #{item.province,jdbcType=VARCHAR}, #{item.city,jdbcType=VARCHAR}, #{item.area,jdbcType=VARCHAR}
+      )</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from sys_school
+    where school_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

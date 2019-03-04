@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysApplicationUpdateRecordMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysApplicationUpdateRecord">
+    <id column="record_id" jdbcType="VARCHAR" property="recordId" />
+    <result column="app_id" jdbcType="VARCHAR" property="appId" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="app_size" jdbcType="INTEGER" property="appSize" />
+    <result column="file_id" jdbcType="VARCHAR" property="fileId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_application_update_record
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from sys_application_update_record
+    where 1!=1 
+      <if test="appId != null and appId != ''">
+        and app_id = #{appId}
+      </if>
+      <if test="version != null and version != ''">
+        and version = #{version}
+      </if>
+      <if test="description != null and description != ''">
+        and description = #{description}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="appSize != null">
+        and app_size = #{appSize}
+      </if>
+      <if test="fileId != null">
+        and file_id = #{fileId}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationUpdateRecord">
+    insert into sys_application_update_record (record_id, app_id, version, 
+      description, status, crt_date, 
+      app_size, file_id)
+    values (#{recordId,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{crtDate,jdbcType=TIMESTAMP}, 
+      #{appSize,jdbcType=INTEGER}, #{fileId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationUpdateRecord">
+    insert into sys_application_update_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordId != null">
+        record_id,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="appSize != null">
+        app_size,
+      </if>
+      <if test="fileId != null">
+        file_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordId != null">
+        #{recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appSize != null">
+        #{appSize,jdbcType=INTEGER},
+      </if>
+      <if test="fileId != null">
+        #{fileId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationUpdateRecord">
+    update sys_application_update_record
+    set app_id = #{appId,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      app_size = #{appSize,jdbcType=INTEGER},
+      file_id = #{fileId,jdbcType=VARCHAR}
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateStatus" parameterType="java.lang.String" >
+    update sys_application_update_record
+    set      status = 0
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationUpdateRecord">
+    update sys_application_update_record
+    <set>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appSize != null">
+        app_size = #{appSize,jdbcType=INTEGER},
+      </if>
+      <if test="fileId != null">
+        file_id = #{fileId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </update>
+<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select record_id, app_id, version, description, status, crt_date, app_size, file_id
+    from sys_application_update_record
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getNewestByAppId" parameterType="java.lang.String" resultMap="BaseResultMap">
+   select
+          a.record_id,
+          a.app_id,
+          a. version,
+          a.description,
+          a.status,
+          a.crt_date,
+          a.app_size,
+          a.file_id
+    from sys_application_update_record a
+    where  a.app_id = #{appId}
+    and a.STATUS = 1
+    order by a.crt_date DESC
+    limit 1
+  </select>
+
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select record_id, app_id, version, description, status, crt_date, app_size, file_id
+    from sys_application_update_record
+    <where> 
+      <if test="appId != null and appId != ''">
+        and app_id = #{appId}
+      </if>
+      <if test="version != null and version != ''">
+        and version = #{version}
+      </if>
+      <if test="description != null and description != ''">
+        and description = #{description}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="appSize != null">
+        and app_size = #{appSize}
+      </if>
+      <if test="fileId != null">
+        and file_id = #{fileId}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sys_application_update_record (record_id, 
+      app_id, version, description, 
+      status, crt_date, app_size, 
+      file_id
+    ) values <foreach collection="list" item="item" separator=",">(#{item.recordId,jdbcType=VARCHAR}, 
+      #{item.appId,jdbcType=VARCHAR}, #{item.version,jdbcType=VARCHAR}, #{item.description,jdbcType=VARCHAR}, 
+      #{item.status,jdbcType=TINYINT}, #{item.crtDate,jdbcType=TIMESTAMP}, #{item.appSize,jdbcType=INTEGER}, 
+      #{item.fileId,jdbcType=VARCHAR})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from sys_application_update_record
+    where record_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

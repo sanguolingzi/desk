@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysApplicationCenterMapper">
+    <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysApplicationCenter">
+        <id column="app_id" jdbcType="VARCHAR" property="appId"/>
+        <result column="stage_id" jdbcType="TINYINT" property="stageId"/>
+        <result column="app_category_id" jdbcType="VARCHAR" property="appCategoryId"/>
+        <result column="app_name" jdbcType="VARCHAR" property="appName"/>
+        <result column="app_desc" jdbcType="VARCHAR" property="appDesc"/>
+        <result column="app_logo" jdbcType="VARCHAR" property="appLogo"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="app_recommend" jdbcType="TINYINT" property="appRecommend"/>
+        <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate"/>
+        <result column="package_name" jdbcType="VARCHAR" property="packageName"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_application_center
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+        delete from sys_application_center
+        where 1!=1
+        <if test="stageId != null">
+            and stage_id = #{stageId}
+        </if>
+        <if test="appCategoryId != null and appCategoryId != ''">
+            and app_category_id = #{appCategoryId}
+        </if>
+        <if test="appName != null and appName != ''">
+            and app_name = #{appName}
+        </if>
+        <if test="appDesc != null and appDesc != ''">
+            and app_desc = #{appDesc}
+        </if>
+        <if test="appLogo != null and appLogo != ''">
+            and app_logo = #{appLogo}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        <if test="appRecommend != null">
+            and app_recommend = #{appRecommend}
+        </if>
+        <if test="crtDate != null">
+            and crt_date = #{crtDate}
+        </if>
+        <if test="packageName != null">
+            and package_name = #{packageName}
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationCenter">
+    insert into sys_application_center (app_id, stage_id, app_category_id, 
+      app_name, app_desc, app_logo,
+      status, app_recommend, crt_date,package_name
+      )
+    values (#{appId,jdbcType=VARCHAR}, #{stageId,jdbcType=TINYINT}, #{appCategoryId,jdbcType=VARCHAR}, 
+      #{appName,jdbcType=VARCHAR}, #{appDesc,jdbcType=VARCHAR}, #{appLogo,jdbcType=VARCHAR},
+      #{status,jdbcType=TINYINT}, #{appRecommend,jdbcType=TINYINT}, #{crtDate,jdbcType=TIMESTAMP},
+      #{packageName,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationCenter">
+        insert into sys_application_center
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="stageId != null">
+                stage_id,
+            </if>
+            <if test="appCategoryId != null">
+                app_category_id,
+            </if>
+            <if test="appName != null">
+                app_name,
+            </if>
+            <if test="appDesc != null">
+                app_desc,
+            </if>
+            <if test="appLogo!= null">
+                app_logo,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="appRecommend != null">
+                app_recommend,
+            </if>
+            <if test="crtDate != null">
+                crt_date,
+            </if>
+            <if test="packageName != null">
+                package_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="stageId != null">
+                #{stageId,jdbcType=TINYINT},
+            </if>
+            <if test="appCategoryId != null">
+                #{appCategoryId,jdbcType=VARCHAR},
+            </if>
+            <if test="appName != null">
+                #{appName,jdbcType=VARCHAR},
+            </if>
+            <if test="appDesc != null">
+                #{appDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="appLogo != null">
+                #{appLogo,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="appRecommend != null">
+                #{appRecommend,jdbcType=TINYINT},
+            </if>
+            <if test="crtDate != null">
+                #{crtDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="packageName != null">
+                #{package_name,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationCenter">
+    update sys_application_center
+    set stage_id = #{stageId,jdbcType=TINYINT},
+      app_category_id = #{appCategoryId,jdbcType=VARCHAR},
+      app_name = #{appName,jdbcType=VARCHAR},
+      app_desc = #{appDesc,jdbcType=VARCHAR},
+      app_logo = #{appLogo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      app_recommend = #{appRecommend,jdbcType=TINYINT},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      package_name = #{packageName,jdbcType=VARCHAR}
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </update>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationCenter">
+        update sys_application_center
+        <set>
+            <if test="stageId != null">
+                stage_id = #{stageId,jdbcType=TINYINT},
+            </if>
+            <if test="appCategoryId != null">
+                app_category_id = #{appCategoryId,jdbcType=VARCHAR},
+            </if>
+            <if test="appName != null">
+                app_name = #{appName,jdbcType=VARCHAR},
+            </if>
+            <if test="appDesc != null">
+                app_desc = #{appDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="appLogo != null">
+                app_logo = #{appLogo,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="appRecommend != null">
+                app_recommend = #{appRecommend,jdbcType=TINYINT},
+            </if>
+            <if test="crtDate != null">
+                crt_date = #{crtDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="packageName != null">
+                package_name = #{packageName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where app_id = #{appId,jdbcType=VARCHAR}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select app_id, stage_id, app_category_id, app_name, app_desc, app_logo, status, app_recommend,
+    crt_date,package_name
+    from sys_application_center
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </select>
+
+    <select id="selectForPage" parameterType="java.util.HashMap" resultType="com.cunw.cloud.familydesk.common.model.SysApplicationCenterVO">
+        SELECT
+            c.app_id "appId",
+            c.app_desc "appDesc",
+            c.App_Name "appName",
+            CONCAT(#{serverPath},c.app_logo) 'appLogo',
+            c.app_recommend "appRecommend",
+            c.crt_date "crtDate",
+            c.package_name "packageName",
+            d.download "downloadNum",
+            ROUND(record.app_size/1024,2) "appSize",
+            record.version,
+            record.file_id "fileId"
+        FROM
+          sys_application_center c
+        LEFT JOIN sys_application_data d ON c.app_id = d.app_id
+        left join
+        (
+            select
+                app_id,
+                version,
+                app_size,
+                file_id,
+                crt_date "updateRecordDate"
+            from sys_application_update_record
+            where status = 1
+        ) record on record.app_id = c.app_id
+        WHERE c. STATUS = 1
+        <if test="appId != null and  appId!= '' ">
+            and c.app_id = #{appId}
+        </if>
+        <if test="stageId != null and  stageId!= ''   ">
+            and c.stage_id = #{stageId}
+        </if>
+        <if test="appCategoryId != null and appCategoryId != ''">
+            and c.app_category_id = #{appCategoryId}
+        </if>
+        <if test="appName != null and appName != ''">
+            and c.app_name LIKE CONCAT('%',#{appName},'%')
+        </if>
+        <choose>
+            <when test="order == newest">order by  c.crt_date desc</when>
+            <when test="order == popular">order by  d.download desc</when>
+            <when test="order == evaluate">order by  d.evaluate desc</when>
+            <otherwise>order by  record.updateRecordDate  desc</otherwise>
+        </choose>
+    </select>
+    <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        select app_id, stage_id, app_category_id, app_name, app_desc, app_logo, status, app_recommend,
+        crt_date,package_name
+        from sys_application_center
+        <where>
+            <if test="stageId != null">
+                and stage_id = #{stageId}
+            </if>
+            <if test="appCategoryId != null and appCategoryId != ''">
+                and app_category_id = #{appCategoryId}
+            </if>
+            <if test="appName != null and appName != ''">
+                and app_name = #{appName}
+            </if>
+            <if test="appDesc != null and appDesc != ''">
+                and app_desc = #{appDesc}
+            </if>
+            <if test="appLogo != null and appLogo != ''">
+                and app_logo = #{appLogo}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="appRecommend != null">
+                and app_recommend = #{appRecommend}
+            </if>
+            <if test="crtDate != null">
+                and crt_date = #{crtDate}
+            </if>
+            <if test="packageName != null and packageName != ''">
+                and package_name = #{appLogo}
+            </if>
+        </where>
+    </select>
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into sys_application_center (app_id,
+        stage_id, app_category_id, app_name,
+        app_desc, app_logo, status,
+        app_recommend, crt_date,package_name
+        ) values
+        <foreach collection="list" item="item" separator=",">(#{item.appId,jdbcType=VARCHAR},
+            #{item.stageId,jdbcType=TINYINT}, #{item.appCategoryId,jdbcType=VARCHAR}, #{item.appName,jdbcType=VARCHAR},
+            #{item.appDesc,jdbcType=VARCHAR}, #{item.appLogo,jdbcType=VARCHAR}, #{item.status,jdbcType=TINYINT},
+            #{item.appRecommend,jdbcType=TINYINT}, #{item.crtDate,jdbcType=TIMESTAMP},
+            #{item.packageName,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <delete id="batchDelete" parameterType="java.util.List">
+        delete from sys_application_center
+        where app_id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.StudyExamTestMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.StudyExamTest">
+    <id column="test_id" jdbcType="VARCHAR" property="testId" />
+    <result column="student_code" jdbcType="VARCHAR" property="studentCode" />
+    <result column="stage" jdbcType="VARCHAR" property="stage" />
+    <result column="subject_id" jdbcType="VARCHAR" property="subjectId" />
+    <result column="version_id" jdbcType="VARCHAR" property="versionId" />
+    <result column="bookId" jdbcType="VARCHAR" property="bookid" />
+    <result column="paper_id" jdbcType="VARCHAR" property="paperId" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="use_time" jdbcType="INTEGER" property="useTime" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="crt_user_code" jdbcType="VARCHAR" property="crtUserCode" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="upd_date" jdbcType="TIMESTAMP" property="updDate" />
+    <!--<result column="anwswer_count" jdbcType="INTEGER" property="anwswerCount" />-->
+    <result column="paper_name" jdbcType="VARCHAR" property="paperName" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from study_exam_test
+    where test_id = #{testId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from study_exam_test
+    where 1!=1 
+      <if test="studentCode != null and studentCode != ''">
+        and student_code = #{studentCode}
+      </if>
+      <if test="stage != null and stage != ''">
+        and stage = #{stage}
+      </if>
+      <if test="subjectId != null and subjectId != ''">
+        and subject_id = #{subjectId}
+      </if>
+      <if test="versionId != null and versionId != ''">
+        and version_id = #{versionId}
+      </if>
+      <if test="bookid != null and bookid != ''">
+        and bookId = #{bookid}
+      </if>
+      <if test="paperId != null and paperId != ''">
+        and paper_id = #{paperId}
+      </if>
+      <if test="score != null">
+        and score = #{score}
+      </if>
+      <if test="useTime != null">
+        and use_time = #{useTime}
+      </if>
+      <if test="startTime != null">
+        and start_time = #{startTime}
+      </if>
+      <if test="endTime != null">
+        and end_time = #{endTime}
+      </if>
+      <if test="crtUserCode != null and crtUserCode != ''">
+        and crt_user_code = #{crtUserCode}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="updDate != null">
+        and upd_date = #{updDate}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.StudyExamTest">
+    insert into study_exam_test (test_id, student_code, stage, 
+      subject_id, version_id, bookId, 
+      paper_id, paper_name, score, use_time,
+      start_time, end_time, crt_user_code, 
+      crt_date, upd_date)
+    values (#{testId,jdbcType=VARCHAR}, #{studentCode,jdbcType=VARCHAR}, #{stage,jdbcType=VARCHAR}, 
+      #{subjectId,jdbcType=VARCHAR}, #{versionId,jdbcType=VARCHAR}, #{bookid,jdbcType=VARCHAR}, 
+      #{paperId,jdbcType=VARCHAR},#{paperName,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{useTime,jdbcType=INTEGER},
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{crtUserCode,jdbcType=VARCHAR}, 
+      #{crtDate,jdbcType=TIMESTAMP}, #{updDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.StudyExamTest">
+    insert into study_exam_test
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="testId != null">
+        test_id,
+      </if>
+      <if test="studentCode != null">
+        student_code,
+      </if>
+      <if test="stage != null">
+        stage,
+      </if>
+      <if test="subjectId != null">
+        subject_id,
+      </if>
+      <if test="versionId != null">
+        version_id,
+      </if>
+      <if test="bookid != null">
+        bookId,
+      </if>
+      <if test="paperId != null">
+        paper_id,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="useTime != null">
+        use_time,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="updDate != null">
+        upd_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="testId != null">
+        #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCode != null">
+        #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null">
+        #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null">
+        #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="versionId != null">
+        #{versionId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookid != null">
+        #{bookid,jdbcType=VARCHAR},
+      </if>
+      <if test="paperId != null">
+        #{paperId,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="useTime != null">
+        #{useTime,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="crtUserCode != null">
+        #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updDate != null">
+        #{updDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.StudyExamTest">
+    update study_exam_test
+    set student_code = #{studentCode,jdbcType=VARCHAR},
+      stage = #{stage,jdbcType=VARCHAR},
+      subject_id = #{subjectId,jdbcType=VARCHAR},
+      version_id = #{versionId,jdbcType=VARCHAR},
+      bookId = #{bookid,jdbcType=VARCHAR},
+      paper_id = #{paperId,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
+      use_time = #{useTime,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      upd_date = #{updDate,jdbcType=TIMESTAMP}
+    where test_id = #{testId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.StudyExamTest">
+    update study_exam_test
+    <set>
+      <if test="studentCode != null">
+        student_code = #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null">
+        stage = #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null">
+        subject_id = #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="versionId != null">
+        version_id = #{versionId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookid != null">
+        bookId = #{bookid,jdbcType=VARCHAR},
+      </if>
+      <if test="paperId != null">
+        paper_id = #{paperId,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="useTime != null">
+        use_time = #{useTime,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updDate != null">
+        upd_date = #{updDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where test_id = #{testId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select test_id, student_code, stage, subject_id, version_id, bookId, paper_id, score, 
+    use_time, start_time, end_time, crt_user_code, crt_date, upd_date
+    from study_exam_test
+    where test_id = #{testId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select test_id, student_code, stage, subject_id, version_id, bookId, paper_id,paper_name, score,
+    use_time, start_time, end_time, crt_user_code, crt_date, upd_date
+    from study_exam_test
+    <where> 
+      <if test="studentCode != null and studentCode != ''">
+        and student_code = #{studentCode}
+      </if>
+      <if test="stage != null and stage != ''">
+        and stage = #{stage}
+      </if>
+      <if test="subjectId != null and subjectId != ''">
+        and subject_id = #{subjectId}
+      </if>
+      <if test="versionId != null and versionId != ''">
+        and version_id = #{versionId}
+      </if>
+      <if test="bookid != null and bookid != ''">
+        and bookId = #{bookid}
+      </if>
+      <if test="paperId != null and paperId != ''">
+        and paper_id = #{paperId}
+      </if>
+      <if test="score != null">
+        and score = #{score}
+      </if>
+      <if test="useTime != null">
+        and use_time = #{useTime}
+      </if>
+      <if test="startTime != null">
+        and start_time = #{startTime}
+      </if>
+      <if test="endTime != null">
+        and end_time = #{endTime}
+      </if>
+      <if test="crtUserCode != null and crtUserCode != ''">
+        and crt_user_code = #{crtUserCode}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="updDate != null">
+        and upd_date = #{updDate}
+      </if>
+      <if test="orderby != null">
+        order by ${questOrder}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into study_exam_test (test_id, 
+      student_code, stage, subject_id, 
+      version_id, bookId, paper_id,paper_name,
+      score, use_time, start_time, 
+      end_time, crt_user_code, crt_date, 
+      upd_date
+    ) values <foreach collection="list" item="item" separator=",">(#{item.testId,jdbcType=VARCHAR}, 
+      #{item.studentCode,jdbcType=VARCHAR}, #{item.stage,jdbcType=VARCHAR}, #{item.subjectId,jdbcType=VARCHAR}, 
+      #{item.versionId,jdbcType=VARCHAR}, #{item.bookid,jdbcType=VARCHAR}, #{item.paperId,jdbcType=VARCHAR}, #{item.paperName,jdbcType=VARCHAR},
+      #{item.score,jdbcType=INTEGER}, #{item.useTime,jdbcType=INTEGER}, #{item.startTime,jdbcType=TIMESTAMP}, 
+      #{item.endTime,jdbcType=TIMESTAMP}, #{item.crtUserCode,jdbcType=VARCHAR}, #{item.crtDate,jdbcType=TIMESTAMP}, 
+      #{item.updDate,jdbcType=TIMESTAMP})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from study_exam_test
+    where test_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      ${id}
+    </foreach>
+  </delete>
+  <select id="selectByParametersScore" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select a.score,b.score,b.quest_id
+    from study_exam_test a,study_exam_test_answer b
+    <where>
+      <if test="studentCode != null and studentCode != ''">
+        and a.student_code = #{studentCode}
+      </if>
+      <if test="paperId != null and paperId != ''">
+        and paper_id = #{paperId}
+      </if>
+    </where>
+  </select>
+
+    <select id="selectAnswerCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+      select count(*) as anwswer_count from study_exam_test_answer seta WHERE seta.test_id in (SELECT stet.test_id	from study_exam_test stet where stet.paper_id = #{paperId,jdbcType=VARCHAR});
+    </select>
+</mapper>

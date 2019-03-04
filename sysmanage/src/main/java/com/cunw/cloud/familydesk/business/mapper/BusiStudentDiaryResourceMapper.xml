@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.business.mapper.BusiStudentDiaryResourceMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.BusiStudentDiaryResource">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="diary_id" jdbcType="VARCHAR" property="diaryId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="file_id" jdbcType="VARCHAR" property="fileId" />
+    <result column="file_url" jdbcType="VARCHAR" property="fileUrl" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from busi_student_diary_resource
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from busi_student_diary_resource
+    where 1!=1 
+      <if test="diaryId != null and diaryId != ''">
+        and diary_id = #{diaryId}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="fileId != null and fileId != ''">
+        and file_id = #{fileId}
+      </if>
+      <if test="fileUrl != null and fileUrl != ''">
+        and file_url = #{fileUrl}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.BusiStudentDiaryResource">
+    insert into busi_student_diary_resource (id, diary_id, status, 
+      file_id, file_url)
+    values (#{id,jdbcType=VARCHAR}, #{diaryId,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{fileId,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.BusiStudentDiaryResource">
+    insert into busi_student_diary_resource
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="diaryId != null">
+        diary_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="fileId != null">
+        file_id,
+      </if>
+      <if test="fileUrl != null">
+        file_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="diaryId != null">
+        #{diaryId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="fileId != null">
+        #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null">
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.BusiStudentDiaryResource">
+    update busi_student_diary_resource
+    set diary_id = #{diaryId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      file_id = #{fileId,jdbcType=VARCHAR},
+      file_url = #{fileUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.BusiStudentDiaryResource">
+    update busi_student_diary_resource
+    <set>
+      <if test="diaryId != null">
+        diary_id = #{diaryId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="fileId != null">
+        file_id = #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null">
+        file_url = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, diary_id, status, file_id, file_url
+    from busi_student_diary_resource
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select id, diary_id, status, file_id, file_url
+    from busi_student_diary_resource
+    <where> 
+      <if test="diaryId != null and diaryId != ''">
+        and diary_id = #{diaryId}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="fileId != null and fileId != ''">
+        and file_id = #{fileId}
+      </if>
+      <if test="fileUrl != null and fileUrl != ''">
+        and file_url = #{fileUrl}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into busi_student_diary_resource (id, 
+      diary_id, status, file_id, 
+      file_url
+    ) values <foreach collection="list" item="item" separator=",">(#{item.id,jdbcType=VARCHAR}, 
+      #{item.diaryId,jdbcType=VARCHAR}, #{item.status,jdbcType=TINYINT}, #{item.fileId,jdbcType=VARCHAR}, 
+      #{item.fileUrl,jdbcType=VARCHAR})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from busi_student_diary_resource
+    where id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

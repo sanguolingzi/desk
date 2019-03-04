@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysApplicationDataMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysApplicationData">
+    <id column="app_id" jdbcType="VARCHAR" property="appId" />
+    <result column="download" jdbcType="INTEGER" property="download" />
+    <result column="favourite" jdbcType="INTEGER" property="favourite" />
+    <result column="evaluate" jdbcType="INTEGER" property="evaluate" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_application_data
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from sys_application_data
+    where 1!=1
+    <if test="download != null">
+      and download = #{download}
+    </if>
+    <if test="favourite != null">
+      and favourite = #{favourite}
+    </if>
+    <if test="evaluate != null">
+      and evaluate = #{evaluate}
+    </if>
+    <if test="status != null">
+      and status = #{status}
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationData">
+    insert into sys_application_data (app_id, download, favourite,
+      evaluate, status)
+    values (#{appId,jdbcType=VARCHAR}, #{download,jdbcType=INTEGER}, #{favourite,jdbcType=INTEGER},
+      #{evaluate,jdbcType=INTEGER}, #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationData">
+  insert into sys_application_data
+  <trim prefix="(" suffix=")" suffixOverrides=",">
+    <if test="appId != null">
+      app_id,
+    </if>
+    <if test="download != null">
+      download,
+    </if>
+    <if test="favourite != null">
+      favourite,
+    </if>
+    <if test="evaluate != null">
+      evaluate,
+    </if>
+    <if test="status != null">
+      status,
+    </if>
+  </trim>
+  <trim prefix="values (" suffix=")" suffixOverrides=",">
+    <if test="appId != null">
+      #{appId,jdbcType=VARCHAR},
+    </if>
+    <if test="download != null">
+      #{download,jdbcType=INTEGER},
+    </if>
+    <if test="favourite != null">
+      #{favourite,jdbcType=INTEGER},
+    </if>
+    <if test="evaluate != null">
+      #{evaluate,jdbcType=INTEGER},
+    </if>
+    <if test="status != null">
+      #{status,jdbcType=TINYINT},
+    </if>
+  </trim>
+</insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationData">
+    update sys_application_data
+    set download = #{download,jdbcType=INTEGER},
+      favourite = #{favourite,jdbcType=INTEGER},
+      evaluate = #{evaluate,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT}
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </update>
+  <update id="addPraise" parameterType="java.lang.String" >
+    update sys_application_data
+    set     evaluate = evaluate+1
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </update>
+  <update id="reducePraise" parameterType="java.lang.String" >
+    update sys_application_data
+    set     evaluate = evaluate-1
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </update>
+  <update id="addDownloadNum" parameterType="java.lang.String" >
+    update sys_application_data
+    set     download = download+1
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.SysApplicationData">
+    update sys_application_data
+    <set>
+      <if test="download != null">
+        download = #{download,jdbcType=INTEGER},
+      </if>
+      <if test="favourite != null">
+        favourite = #{favourite,jdbcType=INTEGER},
+      </if>
+      <if test="evaluate != null">
+        evaluate = #{evaluate,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select app_id, download, favourite, evaluate, status
+    from sys_application_data
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select app_id, download, favourite, evaluate, status
+    from sys_application_data
+    <where>
+      <if test="download != null">
+        and download = #{download}
+      </if>
+      <if test="favourite != null">
+        and favourite = #{favourite}
+      </if>
+      <if test="evaluate != null">
+        and evaluate = #{evaluate}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sys_application_data (app_id,
+    download, favourite, evaluate,
+    status
+    ) values <foreach collection="list" item="item" separator=",">(#{item.appId,jdbcType=VARCHAR},
+    #{item.download,jdbcType=INTEGER}, #{item.favourite,jdbcType=INTEGER}, #{item.evaluate,jdbcType=INTEGER},
+    #{item.status,jdbcType=TINYINT})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from sys_application_data
+    where app_id in
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

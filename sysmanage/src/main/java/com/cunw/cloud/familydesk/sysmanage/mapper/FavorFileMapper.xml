@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.FavorFileMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.FavorFile">
+    <id column="favor_file_id" jdbcType="VARCHAR" property="favorFileId" />
+    <result column="favor_id" jdbcType="VARCHAR" property="favorId" />
+    <result column="file_id" jdbcType="VARCHAR" property="fileId" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="file_src" jdbcType="VARCHAR" property="fileSrc" />
+    <result column="file_url" jdbcType="VARCHAR" property="fileUrl" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="crt_user_code" jdbcType="VARCHAR" property="crtUserCode" />
+    <result column="crt_org_code" jdbcType="VARCHAR" property="crtOrgCode" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="upd_user_code" jdbcType="VARCHAR" property="updUserCode" />
+    <result column="upd_org_code" jdbcType="VARCHAR" property="updOrgCode" />
+    <result column="upd_date" jdbcType="TIMESTAMP" property="updDate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from class_favor_file
+    where favor_file_id = #{favorFileId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.school.common.model.FavorFile">
+    insert into class_favor_file (favor_file_id, favor_id, file_id, 
+      file_name, file_src, file_url, 
+      status, crt_user_code, crt_org_code, 
+      crt_date, upd_user_code, upd_org_code, 
+      upd_date)
+    values (#{favorFileId,jdbcType=VARCHAR}, #{favorId,jdbcType=VARCHAR}, #{fileId,jdbcType=VARCHAR}, 
+      #{fileName,jdbcType=VARCHAR}, #{fileSrc,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{crtUserCode,jdbcType=VARCHAR}, #{crtOrgCode,jdbcType=VARCHAR}, 
+      #{crtDate,jdbcType=TIMESTAMP}, #{updUserCode,jdbcType=VARCHAR}, #{updOrgCode,jdbcType=VARCHAR}, 
+      #{updDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.school.common.model.FavorFile">
+    insert into class_favor_file
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="favorFileId != null">
+        favor_file_id,
+      </if>
+      <if test="favorId != null">
+        favor_id,
+      </if>
+      <if test="fileId != null">
+        file_id,
+      </if>
+      <if test="fileName != null">
+        file_name,
+      </if>
+      <if test="fileSrc != null">
+        file_src,
+      </if>
+      <if test="fileUrl != null">
+        file_url,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code,
+      </if>
+      <if test="crtOrgCode != null">
+        crt_org_code,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="updUserCode != null">
+        upd_user_code,
+      </if>
+      <if test="updOrgCode != null">
+        upd_org_code,
+      </if>
+      <if test="updDate != null">
+        upd_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="favorFileId != null">
+        #{favorFileId,jdbcType=VARCHAR},
+      </if>
+      <if test="favorId != null">
+        #{favorId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileId != null">
+        #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSrc != null">
+        #{fileSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null">
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="crtUserCode != null">
+        #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtOrgCode != null">
+        #{crtOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updUserCode != null">
+        #{updUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updOrgCode != null">
+        #{updOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updDate != null">
+        #{updDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.school.common.model.FavorFile">
+    update class_favor_file
+    set favor_id = #{favorId,jdbcType=VARCHAR},
+      file_id = #{fileId,jdbcType=VARCHAR},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      file_src = #{fileSrc,jdbcType=VARCHAR},
+      file_url = #{fileUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+      crt_org_code = #{crtOrgCode,jdbcType=VARCHAR},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      upd_user_code = #{updUserCode,jdbcType=VARCHAR},
+      upd_org_code = #{updOrgCode,jdbcType=VARCHAR},
+      upd_date = #{updDate,jdbcType=TIMESTAMP}
+    where favor_file_id = #{favorFileId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.school.common.model.FavorFile">
+    update class_favor_file
+    <set>
+      <if test="favorId != null">
+        favor_id = #{favorId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileId != null">
+        file_id = #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSrc != null">
+        file_src = #{fileSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null">
+        file_url = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtOrgCode != null">
+        crt_org_code = #{crtOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updUserCode != null">
+        upd_user_code = #{updUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updOrgCode != null">
+        upd_org_code = #{updOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updDate != null">
+        upd_date = #{updDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where favor_file_id = #{favorFileId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select favor_file_id, favor_id, file_id, file_name, file_src, file_url, status, crt_user_code, 
+    crt_org_code, crt_date, upd_user_code, upd_org_code, upd_date
+    from class_favor_file
+    where favor_file_id = #{favorFileId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select favor_file_id, favor_id, file_id, file_name, file_src, file_url, status, crt_user_code, 
+    crt_org_code, crt_date, upd_user_code, upd_org_code, upd_date
+    from class_favor_file ff
+    <where> 
+      <if test="favorId != null and favorId != ''">
+        and favor_id = #{favorId}
+      </if>
+      <if test="fileId != null and fileId != ''">
+        and file_id = #{fileId}
+      </if>
+      <if test="fileName != null and fileName != ''">
+        and file_name = #{fileName}
+      </if>
+      <if test="fileSrc != null and fileSrc != ''">
+        and file_src = #{fileSrc}
+      </if>
+      <if test="fileUrl != null and fileUrl != ''">
+        and file_url = #{fileUrl}
+      </if>
+      <if test="status != null and status != ''">
+        and status = #{status}
+      </if>
+      <if test="crtUserCode != null and crtUserCode != ''">
+        and crt_user_code = #{crtUserCode}
+      </if>
+      <if test="crtOrgCode != null and crtOrgCode != ''">
+        and crt_org_code = #{crtOrgCode}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="updUserCode != null and updUserCode != ''">
+        and upd_user_code = #{updUserCode}
+      </if>
+      <if test="updOrgCode != null and updOrgCode != ''">
+        and upd_org_code = #{updOrgCode}
+      </if>
+      <if test="updDate != null">
+        and upd_date = #{updDate}
+      </if>
+      <if test="userCode != null">
+        and exists (select favor_id from class_favorite f where f.favor_id=ff.favor_id and f.user_code=#{userCode})
+        <if test="fileIds != null and fileIds.size > 0">
+        and file_id in
+        <foreach collection="fileIds" item="id" open="(" close=")" separator=",">
+          #{id}
+        </foreach>
+        </if>
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into class_favor_file (favor_file_id, 
+      favor_id, file_id, file_name, 
+      file_src, file_url, status, 
+      crt_user_code, crt_org_code, crt_date, 
+      upd_user_code, upd_org_code, upd_date
+      
+    ) values <foreach collection="list" item="item" separator=",">(#{item.favorFileId,jdbcType=VARCHAR}, 
+      #{item.favorId,jdbcType=VARCHAR}, #{item.fileId,jdbcType=VARCHAR}, #{item.fileName,jdbcType=VARCHAR}, 
+      #{item.fileSrc,jdbcType=VARCHAR}, #{item.fileUrl,jdbcType=VARCHAR}, #{item.status,jdbcType=VARCHAR}, 
+      #{item.crtUserCode,jdbcType=VARCHAR}, #{item.crtOrgCode,jdbcType=VARCHAR}, #{item.crtDate,jdbcType=TIMESTAMP}, 
+      #{item.updUserCode,jdbcType=VARCHAR}, #{item.updOrgCode,jdbcType=VARCHAR}, #{item.updDate,jdbcType=TIMESTAMP}
+      )</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from class_favor_file
+    where favor_file_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      ${id}
+    </foreach>
+  </delete>
+</mapper>

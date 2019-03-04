@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysParentMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysParent">
+    <id column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="parent_name" jdbcType="VARCHAR" property="parentName" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_parent
+    where parent_id = #{parentId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from sys_parent
+    where 1!=1 
+      <if test="parentName != null and parentName != ''">
+        and parent_name = #{parentName}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="headImg != null and headImg != ''">
+        and head_img = #{headImg}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="sex != null">
+        and sex = #{sex}
+      </if>
+      <if test="phone != null and phone != ''">
+        and phone = #{phone}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysParent">
+    insert into sys_parent (parent_id, parent_name, status, 
+      head_img, crt_date, sex, 
+      phone)
+    values (#{parentId,jdbcType=VARCHAR}, #{parentName,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{headImg,jdbcType=VARCHAR}, #{crtDate,jdbcType=TIMESTAMP}, #{sex,jdbcType=TINYINT}, 
+      #{phone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysParent">
+    insert into sys_parent
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="parentName != null">
+        parent_name,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="headImg != null">
+        head_img,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentName != null">
+        #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="headImg != null">
+        #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysParent">
+    update sys_parent
+    set parent_name = #{parentName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      head_img = #{headImg,jdbcType=VARCHAR},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      sex = #{sex,jdbcType=TINYINT},
+      phone = #{phone,jdbcType=VARCHAR}
+    where parent_id = #{parentId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.SysParent">
+    update sys_parent
+    <set>
+      <if test="parentName != null">
+        parent_name = #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="headImg != null">
+        head_img = #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where parent_id = #{parentId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select parent_id, parent_name, status, head_img, crt_date, sex, phone
+    from sys_parent
+    where parent_id = #{parentId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select parent_id, parent_name, status, head_img, crt_date, sex, phone
+    from sys_parent
+    <where> 
+      <if test="parentName != null and parentName != ''">
+        and parent_name = #{parentName}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="headImg != null and headImg != ''">
+        and head_img = #{headImg}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="sex != null">
+        and sex = #{sex}
+      </if>
+      <if test="phone != null and phone != ''">
+        and phone = #{phone}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sys_parent (parent_id, 
+      parent_name, status, head_img, 
+      crt_date, sex, phone
+      
+    ) values <foreach collection="list" item="item" separator=",">(#{item.parentId,jdbcType=VARCHAR}, 
+      #{item.parentName,jdbcType=VARCHAR}, #{item.status,jdbcType=TINYINT}, #{item.headImg,jdbcType=VARCHAR}, 
+      #{item.crtDate,jdbcType=TIMESTAMP}, #{item.sex,jdbcType=TINYINT}, #{item.phone,jdbcType=VARCHAR}
+      )</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from sys_parent
+    where parent_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

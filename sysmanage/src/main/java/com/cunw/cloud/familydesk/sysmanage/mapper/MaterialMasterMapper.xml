@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.MaterialMasterMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.MaterialMaster">
+    <id column="master_id" jdbcType="VARCHAR" property="masterId" />
+    <result column="student_code" jdbcType="VARCHAR" property="studentCode" />
+    <result column="stage" jdbcType="VARCHAR" property="stage" />
+    <result column="subject_id" jdbcType="VARCHAR" property="subjectId" />
+    <result column="version_id" jdbcType="VARCHAR" property="versionId" />
+    <result column="bookId" jdbcType="VARCHAR" property="bookid" />
+    <result column="chapter_id" jdbcType="VARCHAR" property="chapterId" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="star" jdbcType="INTEGER" property="star" />
+    <result column="rank" jdbcType="INTEGER" property="rank" />
+    <result column="crt_user_code" jdbcType="VARCHAR" property="crtUserCode" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="upd_date" jdbcType="TIMESTAMP" property="updDate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from study_material_master
+    where master_id = #{masterId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from study_material_master
+    where 1!=1 
+      <if test="studentCode != null and studentCode != ''">
+        and student_code = #{studentCode}
+      </if>
+      <if test="stage != null and stage != ''">
+        and stage = #{stage}
+      </if>
+      <if test="subjectId != null and subjectId != ''">
+        and subject_id = #{subjectId}
+      </if>
+      <if test="versionId != null and versionId != ''">
+        and version_id = #{versionId}
+      </if>
+      <if test="bookid != null and bookid != ''">
+        and bookId = #{bookid}
+      </if>
+      <if test="chapterId != null and chapterId != ''">
+        and chapter_id = #{chapterId}
+      </if>
+      <if test="score != null">
+        and score = #{score}
+      </if>
+      <if test="star != null">
+        and star = #{star}
+      </if>
+      <if test="rank != null">
+        and rank = #{rank}
+      </if>
+      <if test="crtUserCode != null and crtUserCode != ''">
+        and crt_user_code = #{crtUserCode}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="updDate != null">
+        and upd_date = #{updDate}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.MaterialMaster">
+    insert into study_material_master (master_id, student_code, stage, 
+      subject_id, version_id, bookId, 
+      chapter_id, score, star, rank,
+      crt_user_code, crt_date, upd_date
+      )
+    values (#{masterId,jdbcType=VARCHAR}, #{studentCode,jdbcType=VARCHAR}, #{stage,jdbcType=VARCHAR}, 
+      #{subjectId,jdbcType=VARCHAR}, #{versionId,jdbcType=VARCHAR}, #{bookid,jdbcType=VARCHAR}, 
+      #{chapterId,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{star,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER},
+      #{crtUserCode,jdbcType=VARCHAR}, #{crtDate,jdbcType=TIMESTAMP}, #{updDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.MaterialMaster">
+    insert into study_material_master
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="masterId != null">
+        master_id,
+      </if>
+      <if test="studentCode != null">
+        student_code,
+      </if>
+      <if test="stage != null">
+        stage,
+      </if>
+      <if test="subjectId != null">
+        subject_id,
+      </if>
+      <if test="versionId != null">
+        version_id,
+      </if>
+      <if test="bookid != null">
+        bookId,
+      </if>
+      <if test="chapterId != null">
+        chapter_id,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="star != null">
+        star,
+      </if>
+      <if test="rank != null">
+        rank,
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="updDate != null">
+        upd_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="masterId != null">
+        #{masterId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCode != null">
+        #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null">
+        #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null">
+        #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="versionId != null">
+        #{versionId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookid != null">
+        #{bookid,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterId != null">
+        #{chapterId,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="star != null">
+        #{star,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null">
+        #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="crtUserCode != null">
+        #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updDate != null">
+        #{updDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.MaterialMaster">
+    update study_material_master
+    set student_code = #{studentCode,jdbcType=VARCHAR},
+      stage = #{stage,jdbcType=VARCHAR},
+      subject_id = #{subjectId,jdbcType=VARCHAR},
+      version_id = #{versionId,jdbcType=VARCHAR},
+      bookId = #{bookid,jdbcType=VARCHAR},
+      chapter_id = #{chapterId,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
+      star = #{star,jdbcType=INTEGER},
+      rank = #{rank,jdbcType=INTEGER},
+      crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      upd_date = #{updDate,jdbcType=TIMESTAMP}
+    where master_id = #{masterId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.MaterialMaster">
+    update study_material_master
+    <set>
+      <if test="studentCode != null">
+        student_code = #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null">
+        stage = #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null">
+        subject_id = #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="versionId != null">
+        version_id = #{versionId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookid != null">
+        bookId = #{bookid,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterId != null">
+        chapter_id = #{chapterId,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="star != null">
+        star = #{star,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null">
+        rank = #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updDate != null">
+        upd_date = #{updDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where master_id = #{masterId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select master_id, student_code, stage, subject_id, version_id, bookId, chapter_id, 
+    score, star, rank, crt_user_code, crt_date, upd_date
+    from study_material_master
+    where master_id = #{masterId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select master_id, student_code, stage, subject_id, version_id, bookId, chapter_id, 
+    score, star, rank, crt_user_code, crt_date, upd_date
+    from study_material_master
+    <where> 
+      <if test="studentCode != null and studentCode != ''">
+        and student_code = #{studentCode}
+      </if>
+      <if test="stage != null and stage != ''">
+        and stage = #{stage}
+      </if>
+      <if test="subjectId != null and subjectId != ''">
+        and subject_id = #{subjectId}
+      </if>
+      <if test="versionId != null and versionId != ''">
+        and version_id = #{versionId}
+      </if>
+      <if test="bookid != null and bookid != ''">
+        and bookId = #{bookid}
+      </if>
+      <if test="chapterId != null and chapterId != ''">
+        and chapter_id = #{chapterId}
+      </if>
+      <if test="score != null">
+        and score = #{score}
+      </if>
+      <if test="star != null">
+        and star = #{star}
+      </if>
+      <if test="rank != null">
+        and rank = #{rank}
+      </if>
+      <if test="crtUserCode != null and crtUserCode != ''">
+        and crt_user_code = #{crtUserCode}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="updDate != null">
+        and upd_date = #{updDate}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into study_material_master (master_id, 
+      student_code, stage, subject_id, 
+      version_id, bookId, chapter_id, 
+      score, star, rank, crt_user_code,
+      crt_date, upd_date
+    ) values <foreach collection="list" item="item" separator=",">(#{item.masterId,jdbcType=VARCHAR}, 
+      #{item.studentCode,jdbcType=VARCHAR}, #{item.stage,jdbcType=VARCHAR}, #{item.subjectId,jdbcType=VARCHAR}, 
+      #{item.versionId,jdbcType=VARCHAR}, #{item.bookid,jdbcType=VARCHAR}, #{item.chapterId,jdbcType=VARCHAR}, 
+      #{item.score,jdbcType=INTEGER}, #{item.star,jdbcType=INTEGER}, #{item.rank,jdbcType=INTEGER}, #{item.crtUserCode,jdbcType=VARCHAR},
+      #{item.crtDate,jdbcType=TIMESTAMP}, #{item.updDate,jdbcType=TIMESTAMP})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from study_material_master
+    where master_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      ${id}
+    </foreach>
+  </delete>
+  <select id="selectByDirIds" resultMap="BaseResultMap">
+    select master_id, student_code, stage, subject_id, version_id, bookId, chapter_id,
+    score, star, rank, crt_user_code, crt_date, upd_date
+    from study_material_master
+    where student_code = #{studentCode} and chapter_id in
+    <foreach collection="dirIds" item="id" open="(" close=")" separator=",">
+      ${id}
+    </foreach>
+  </select>
+
+  <update id="updateRank" parameterType="com.cunw.cloud.familydesk.common.model.MaterialMaster">
+    update study_material_master
+    set score = #{score,jdbcType=INTEGER},
+    star = #{star,jdbcType=INTEGER},
+    rank = #{rank,jdbcType=INTEGER}
+    where master_id = #{masterId,jdbcType=VARCHAR}
+  </update>
+</mapper>

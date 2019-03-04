@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.business.mapper.BusiStudentDiaryMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.BusiStudentDiary">
+    <id column="diary_id" jdbcType="VARCHAR" property="diaryId" />
+    <result column="diary_student_id" jdbcType="VARCHAR" property="diaryStudentId" />
+    <result column="diary_title" jdbcType="VARCHAR" property="diaryTitle" />
+    <result column="diary_mood" jdbcType="VARCHAR" property="diaryMood" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="diary_text" jdbcType="LONGVARCHAR" property="diaryText" />
+  </resultMap>
+  <resultMap id="StudentDiaryResultMap" type="com.cunw.cloud.familydesk.common.vo.StudentDiaryVO">
+    <id column="diary_id" jdbcType="VARCHAR" property="diaryId"/>
+    <result column="diary_student_id" jdbcType="VARCHAR" property="diaryStudentId"/>
+    <result column="diary_title" jdbcType="VARCHAR" property="diaryTitle"/>
+    <result column="diary_mood" jdbcType="VARCHAR" property="diaryMood"/>
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate"/>
+    <result column="diary_text" jdbcType="LONGVARCHAR" property="diaryText"/>
+    <result column="path" jdbcType="VARCHAR" property="fileUrl"/>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from busi_student_diary
+    where diary_id = #{diaryId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from busi_student_diary
+    where 1!=1 
+      <if test="diaryStudentId != null and diaryStudentId != ''">
+        and diary_student_id = #{diaryStudentId}
+      </if>
+      <if test="diaryTitle != null and diaryTitle != ''">
+        and diary_title = #{diaryTitle}
+      </if>
+      <if test="diaryMood != null and diaryMood != ''">
+        and diary_mood = #{diaryMood}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="diaryText != null">
+        and diary_text = #{diaryText}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.BusiStudentDiary">
+    insert into busi_student_diary (diary_id, diary_student_id, diary_title, 
+      diary_mood, status, crt_date, 
+      diary_text)
+    values (#{diaryId,jdbcType=VARCHAR}, #{diaryStudentId,jdbcType=VARCHAR}, #{diaryTitle,jdbcType=VARCHAR}, 
+      #{diaryMood,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{crtDate,jdbcType=TIMESTAMP}, 
+      #{diaryText,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.BusiStudentDiary">
+    insert into busi_student_diary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="diaryId != null">
+        diary_id,
+      </if>
+      <if test="diaryStudentId != null">
+        diary_student_id,
+      </if>
+      <if test="diaryTitle != null">
+        diary_title,
+      </if>
+      <if test="diaryMood != null">
+        diary_mood,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="diaryText != null">
+        diary_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="diaryId != null">
+        #{diaryId,jdbcType=VARCHAR},
+      </if>
+      <if test="diaryStudentId != null">
+        #{diaryStudentId,jdbcType=VARCHAR},
+      </if>
+      <if test="diaryTitle != null">
+        #{diaryTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="diaryMood != null">
+        #{diaryMood,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="diaryText != null">
+        #{diaryText,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.BusiStudentDiary">
+    update busi_student_diary
+    set diary_student_id = #{diaryStudentId,jdbcType=VARCHAR},
+      diary_title = #{diaryTitle,jdbcType=VARCHAR},
+      diary_mood = #{diaryMood,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      diary_text = #{diaryText,jdbcType=LONGVARCHAR}
+    where diary_id = #{diaryId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.BusiStudentDiary">
+    update busi_student_diary
+    <set>
+      <if test="diaryStudentId != null">
+        diary_student_id = #{diaryStudentId,jdbcType=VARCHAR},
+      </if>
+      <if test="diaryTitle != null">
+        diary_title = #{diaryTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="diaryMood != null">
+        diary_mood = #{diaryMood,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="diaryText != null">
+        diary_text = #{diaryText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where diary_id = #{diaryId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select diary_id, diary_student_id, diary_title, diary_mood, status, crt_date, diary_text
+    from busi_student_diary
+    where diary_id = #{diaryId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select diary_id, diary_student_id, diary_title, diary_mood, status, crt_date, diary_text
+    from busi_student_diary
+    <where> 
+      <if test="diaryStudentId != null and diaryStudentId != ''">
+        and diary_student_id = #{diaryStudentId}
+      </if>
+      <if test="diaryTitle != null and diaryTitle != ''">
+        and diary_title = #{diaryTitle}
+      </if>
+      <if test="diaryMood != null and diaryMood != ''">
+        and diary_mood = #{diaryMood}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="diaryText != null">
+        and diary_text = #{diaryText}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into busi_student_diary (diary_id, 
+      diary_student_id, diary_title, diary_mood, 
+      status, crt_date, diary_text
+      
+    ) values <foreach collection="list" item="item" separator=",">(#{item.diaryId,jdbcType=VARCHAR}, 
+      #{item.diaryStudentId,jdbcType=VARCHAR}, #{item.diaryTitle,jdbcType=VARCHAR}, #{item.diaryMood,jdbcType=VARCHAR}, 
+      #{item.status,jdbcType=TINYINT}, #{item.crtDate,jdbcType=TIMESTAMP}, #{item.diaryText,jdbcType=LONGVARCHAR}
+      )</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from busi_student_diary
+    where diary_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+
+  <select id="seleStudentDiaryList" parameterType="java.lang.String" resultMap="BaseResultMap">
+   select
+         sd.diary_id,
+         sd.crt_date,
+         sd.diary_mood,
+         SUBSTR(sd.diary_text,1,40)as diary_text,
+         diary_title
+   from busi_student_diary sd
+   where sd.diary_student_id = #{diaryStudentId}
+   order by crt_date desc
+  </select>
+</mapper>

@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.StudentWrongQuestionMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.StudentWrongQuestion">
+    <id column="wrong_question_id" jdbcType="VARCHAR" property="wrongQuestionId" />
+    <result column="stage" jdbcType="INTEGER" property="stage" />
+    <result column="student_code" jdbcType="VARCHAR" property="studentCode" />
+    <result column="question_id" jdbcType="VARCHAR" property="questionId" />
+    <result column="subject_id" jdbcType="VARCHAR" property="subjectId" />
+    <result column="subject_name" jdbcType="VARCHAR" property="subjectName" />
+    <result column="book_id" jdbcType="VARCHAR" property="bookId" />
+    <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+    <result column="knowledge_id" jdbcType="VARCHAR" property="knowledgeId" />
+    <result column="knowledge_name" jdbcType="VARCHAR" property="knowledgeName" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="my_answer" jdbcType="VARCHAR" property="myAnswer" />
+    <result column="crt_user_code" jdbcType="VARCHAR" property="crtUserCode" />
+    <result column="crt_org_code" jdbcType="VARCHAR" property="crtOrgCode" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="upd_user_code" jdbcType="VARCHAR" property="updUserCode" />
+    <result column="upd_org_code" jdbcType="VARCHAR" property="updOrgCode" />
+    <result column="upd_date" jdbcType="TIMESTAMP" property="updDate" />
+  </resultMap>
+  <resultMap id="SubjectBaseResultMap" type="com.cunw.cloud.familydesk.common.model.StudentWrongQuestion">
+    <id column="wrong_question_id" jdbcType="VARCHAR" property="wrongQuestionId" />
+    <result column="subject_id" jdbcType="VARCHAR" property="subjectId" />
+    <result column="subject_Name" jdbcType="VARCHAR" property="subjectName" />
+    <result column="book_id" jdbcType="VARCHAR" property="bookId" />
+    <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+    <result column="knowledge_id" jdbcType="VARCHAR" property="knowledgeId" />
+    <result column="knowledge_name" jdbcType="VARCHAR" property="knowledgeName" />
+    <result column="question_count" jdbcType="INTEGER" property="questionCount" />
+    <result column="question_id" jdbcType="VARCHAR" property="questionId" />
+  </resultMap>
+  <resultMap id="CountMap" type="com.cunw.cloud.familydesk.common.model.WrongQuestion">
+    <result column="subject_id" jdbcType="VARCHAR" property="subjectId" />
+    <result column="subject_Name" jdbcType="VARCHAR" property="subjectName" />
+    <result column="book_id" jdbcType="VARCHAR" property="bookId" />
+    <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+    <result column="knowledge_id" jdbcType="VARCHAR" property="knowledgeId" />
+    <result column="knowledge_name" jdbcType="VARCHAR" property="knowledgeName" />
+    <result column="question_count" jdbcType="INTEGER" property="questionCount" />
+  </resultMap>
+  <select id="getSubjectWrongQuestions" parameterType="java.util.HashMap" resultMap="CountMap">
+    select swq.subject_id, swq.subject_name, count(swq.subject_id) as question_count from student_wrong_question swq
+    where swq.student_code = #{studentCode,jdbcType=VARCHAR} and swq.stage = #{stage, jdbcType=INTEGER} group by swq.subject_id, swq.subject_name
+  </select>
+  <select id="getSubjectBookWrongQuestions" parameterType="java.lang.String" resultMap="CountMap">
+    select swq.subject_id, swq.subject_name, swq.book_id, swq.book_name, count(swq.subject_id) as question_count from student_wrong_question swq
+    where swq.student_code = #{studentCode,jdbcType=VARCHAR} and swq.subject_id = #{subjectId,jdbcType=VARCHAR}
+    group by swq.subject_id, swq.subject_name, swq.book_id, swq.book_name
+  </select>
+  <select id="getknowledgeWrongQuestionCount" parameterType="java.util.HashMap" resultMap="CountMap">
+    select swq.subject_id, swq.subject_name, swq.book_id, swq.book_name, swq.knowledge_id, swq.knowledge_name, count(swq.subject_id) as question_count from student_wrong_question swq
+    where swq.student_code = #{studentCode,jdbcType=VARCHAR}
+    <if test="subject_id != null">
+      and swq.subject_id = #{subjectId,jdbcType=VARCHAR}
+    </if>
+    <if test="bookId != null and bookId != ''">
+      and swq.book_id = #{bookId,jdbcType=VARCHAR}
+    </if>
+    group by  swq.subject_id, swq.subject_name, swq.book_id, swq.book_name, swq.knowledge_id, swq.knowledge_name
+  </select>
+  <select id="selectknowledgeWrongQuestionCountBySubject" parameterType="java.util.HashMap" resultMap="CountMap">
+    select swq.subject_id, swq.subject_name, swq.knowledge_id, swq.knowledge_name, count(swq.subject_id) as question_count from student_wrong_question swq
+    where swq.student_code = #{studentCode,jdbcType=VARCHAR} and swq.subject_id = #{subjectId,jdbcType=VARCHAR}
+    group by  swq.subject_id, swq.subject_name, swq.knowledge_id, swq.knowledge_name
+  </select>
+  <select id="getWrongQuestions" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select wrong_question_id, stage, student_code, question_id, subject_id, subject_name, book_id, book_name, knowledge_id,knowledge_Name, status,
+    case when source = '1' then '手机APP' when source = '2' then '手机APP' when source = '3' then '课桌端' else '其他' end as source,
+    label, my_answer, crt_user_code, crt_org_code, crt_date, upd_user_code, upd_org_code, upd_date
+    from student_wrong_question swq
+    where swq.student_code = #{studentCode}
+    <if test="subjectId != null and subjectId != ''">
+      and swq.subject_id = #{subjectId}
+    </if>
+    <if test="knowledgeId != null and knowledgeId != ''">
+      and swq.knowledge_id = #{knowledgeId}
+    </if>
+    <if test="startDate != '' and startDate != null">
+      and swq.crt_date &gt; #{startDate}
+    </if>
+    <if test="endDate != '' and endDate != null">
+      and swq.crt_date &lt; #{endDate}
+    </if>
+    ORDER BY swq.crt_date DESC;
+  </select>
+  <select id="getWrongQuestionIds" parameterType="java.util.HashMap" resultMap="SubjectBaseResultMap">
+    select swq.wrong_question_id, swq.question_id from student_wrong_question swq
+    where swq.student_code = #{studentCode}
+    <if test="subjectId != null and subjectId != ''">
+      and swq.subject_id = #{subjectId}
+    </if>
+    <if test="knowledgeId != null and knowledgeId != ''">
+      and swq.knowledge_id = #{knowledgeId}
+    </if>
+    <if test="startDate != '' and startDate != null">
+      and swq.crt_date &gt; #{startDate}
+    </if>
+    <if test="endDate != '' and endDate != null">
+      and swq.crt_date &lt; #{endDate}
+    </if>
+    ORDER BY swq.crt_date DESC;
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from student_wrong_question
+    where wrong_question_id = #{wrongQuestionId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from student_wrong_question
+    where 1!=1
+    <if test="studentCode != null and studentCode != ''">
+      and student_code = #{studentCode}
+    </if>
+    <if test="questionId != null and questionId != ''">
+      and question_id = #{questionId}
+    </if>
+    <if test="subjectId != null and subjectId != ''">
+      and subject_id = #{subjectId}
+    </if>
+    <if test="subjectName != null and subjectName != ''">
+      and subject_name = #{subjectName}
+    </if>
+    <if test="bookId != null and bookId != ''">
+      and book_id = #{bookId}
+    </if>
+    <if test="bookName != null and bookName != ''">
+      and book_name = #{bookName}
+    </if>
+    <if test="status != null and status != ''">
+      and status = #{status}
+    </if>
+    <if test="crtUserCode != null and crtUserCode != ''">
+      and crt_user_code = #{crtUserCode}
+    </if>
+    <if test="crtOrgCode != null and crtOrgCode != ''">
+      and crt_org_code = #{crtOrgCode}
+    </if>
+    <if test="crtDate != null">
+      and crt_date = #{crtDate}
+    </if>
+    <if test="updUserCode != null and updUserCode != ''">
+      and upd_user_code = #{updUserCode}
+    </if>
+    <if test="updOrgCode != null and updOrgCode != ''">
+      and upd_org_code = #{updOrgCode}
+    </if>
+    <if test="updDate != null">
+      and upd_date = #{updDate}
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.StudentWrongQuestion">
+    insert into student_wrong_question (wrong_question_id, stage, student_code, question_id,
+    subject_id, subject_name, book_id,
+    book_name,knowledge_id, knowledge_name, status, source, label, my_answer, crt_user_code,
+    crt_org_code, crt_date, upd_user_code,
+    upd_org_code, upd_date)
+    values (#{wrongQuestionId,jdbcType=VARCHAR},#{stage,jdbcType=INTEGER}, #{studentCode,jdbcType=VARCHAR}, #{questionId,jdbcType=VARCHAR},
+    #{subjectId,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR},
+    #{bookId,jdbcType=VARCHAR}, #{bookName,jdbcType=VARCHAR},
+    #{knowledgeId,jdbcType=VARCHAR},#{knowledgeName,jdbcType=VARCHAR},
+    #{status,jdbcType=VARCHAR},#{source,jdbcType=VARCHAR},#{label,jdbcType=VARCHAR},#{myAnswer,jdbcType=VARCHAR},
+    #{crtUserCode,jdbcType=VARCHAR}, #{crtOrgCode,jdbcType=VARCHAR}, #{crtDate,jdbcType=TIMESTAMP},
+    #{updUserCode,jdbcType=VARCHAR}, #{updOrgCode,jdbcType=VARCHAR}, #{updDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.StudentWrongQuestion">
+    insert into student_wrong_question
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wrongQuestionId != null">
+        wrong_question_id,
+      </if>
+      <if test="stage != null">
+        and stage = #{stage}
+      </if>
+      <if test="studentCode != null">
+        student_code,
+      </if>
+      <if test="questionId != null">
+        question_id,
+      </if>
+      <if test="subjectId != null">
+        subject_id,
+      </if>
+      <if test="subjectName != null">
+        subject_name,
+      </if>
+      <if test="bookId != null">
+        book_id,
+      </if>
+      <if test="bookName != null">
+        book_name,
+      </if>
+      <if test="knowledgeId != null">
+        knowledge_id,
+      </if>
+      <if test="knowledgeName != null">
+        knowledge_name,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="label != null">
+        label,
+      </if>
+      <if test="myAnswer != null">
+        my_answer,
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code,
+      </if>
+      <if test="crtOrgCode != null">
+        crt_org_code,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="updUserCode != null">
+        upd_user_code,
+      </if>
+      <if test="updOrgCode != null">
+        upd_org_code,
+      </if>
+      <if test="updDate != null">
+        upd_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wrongQuestionId != null">
+        #{wrongQuestionId,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null">
+        #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="studentCode != null">
+        #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionId != null">
+        #{questionId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null">
+        #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null">
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookId != null">
+        #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookName != null">
+        #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeId != null">
+        #{knowledgeId,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeName != null">
+        #{knowledgeName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="myAnswer != null">
+        #{myAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="crtUserCode != null">
+        #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtOrgCode != null">
+        #{crtOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updUserCode != null">
+        #{updUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updOrgCode != null">
+        #{updOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updDate != null">
+        #{updDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.StudentWrongQuestion">
+    update student_wrong_question
+    set stage = #{stage,jdbcType=INTEGER},
+    student_code = #{studentCode,jdbcType=VARCHAR},
+    question_id = #{questionId,jdbcType=VARCHAR},
+    subject_id = #{subjectId,jdbcType=VARCHAR},
+    subject_name = #{subjectName,jdbcType=VARCHAR},
+    book_id = #{bookId,jdbcType=VARCHAR},
+    book_name = #{bookName,jdbcType=VARCHAR},
+    knowledge_id = #{bookId,jdbcType=VARCHAR},
+    knowledge_name = #{bookName,jdbcType=VARCHAR},
+    status = #{status,jdbcType=VARCHAR},
+    source = #{source,jdbcType=VARCHAR},
+    label = #{label,jdbcType=VARCHAR},
+    my_answer = #{myAnswer,jdbcType=VARCHAR},
+    crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+    crt_org_code = #{crtOrgCode,jdbcType=VARCHAR},
+    crt_date = #{crtDate,jdbcType=TIMESTAMP},
+    upd_user_code = #{updUserCode,jdbcType=VARCHAR},
+    upd_org_code = #{updOrgCode,jdbcType=VARCHAR},
+    upd_date = #{updDate,jdbcType=TIMESTAMP}
+    where wrong_question_id = #{wrongQuestionId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.StudentWrongQuestion">
+    update student_wrong_question
+    <set>
+      <if test="stage != null">
+        stage = #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="studentCode != null">
+        student_code = #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionId != null">
+        question_id = #{questionId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null">
+        subject_id = #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null">
+        subject_name = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookId != null">
+        book_id = #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookName != null">
+        book_name = #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeId != null">
+        knowledge_id = #{knowledgeId,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeName != null">
+        knowledge_name = #{knowledgeName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        label = #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="myAnswer != null">
+        my_answer = #{myAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtOrgCode != null">
+        crt_org_code = #{crtOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updUserCode != null">
+        upd_user_code = #{updUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updOrgCode != null">
+        upd_org_code = #{updOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updDate != null">
+        upd_date = #{updDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where wrong_question_id = #{wrongQuestionId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select wrong_question_id, stage, student_code, question_id, subject_id, subject_name, book_id,
+    book_name, knowledge_id, knowledge_Name, status, source, label, my_answer, crt_user_code, crt_org_code, crt_date, upd_user_code, upd_org_code,
+    upd_date
+    from student_wrong_question
+    where wrong_question_id = #{wrongQuestionId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select wrong_question_id, stage, student_code, question_id, subject_id, subject_name, book_id,
+    book_name, knowledge_id, knowledge_Name, status, source, label, my_answer, crt_user_code, crt_org_code, crt_date, upd_user_code, upd_org_code,
+    upd_date
+    from student_wrong_question
+    <where>
+      <if test="stage != null and stage != ''">
+        and stage = #{stage}
+      </if>
+      <if test="studentCode != null and studentCode != ''">
+        and student_code = #{studentCode}
+      </if>
+      <if test="questionId != null and questionId != ''">
+        and question_id = #{questionId}
+      </if>
+      <if test="subjectId != null and subjectId != ''">
+        and subject_id = #{subjectId}
+      </if>
+      <if test="subjectName != null and subjectName != ''">
+        and subject_name = #{subjectName}
+      </if>
+      <if test="bookId != null and bookId != ''">
+        and book_id = #{bookId}
+      </if>
+      <if test="bookName != null and bookName != ''">
+        and book_name = #{bookName}
+      </if>
+      <if test="knowledgeId != null and bookId != ''">
+        and knowledge_id = #{knowledgeId}
+      </if>
+      <if test="knowledgeName != null and knowledgeName != ''">
+        and knowledge_name = #{knowledgeName}
+      </if>
+      <if test="status != null and status != ''">
+        and status = #{status}
+      </if>
+      <if test="source != null and source != ''">
+        and source = #{source}
+      </if>
+      <if test="label != null and label != ''">
+        and label = #{label}
+      </if>
+      <if test="myAnswer != null and myAnswer != ''">
+        and my_answer = #{myAnswer}
+      </if>
+      <if test="crtUserCode != null and crtUserCode != ''">
+        and crt_user_code = #{crtUserCode}
+      </if>
+      <if test="crtOrgCode != null and crtOrgCode != ''">
+        and crt_org_code = #{crtOrgCode}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="updUserCode != null and updUserCode != ''">
+        and upd_user_code = #{updUserCode}
+      </if>
+      <if test="updOrgCode != null and updOrgCode != ''">
+        and upd_org_code = #{updOrgCode}
+      </if>
+      <if test="updDate != null">
+        and upd_date = #{updDate}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into student_wrong_question (wrong_question_id, stage,
+    student_code, question_id, subject_id,
+    subject_name, book_id, book_name,
+    knowledge_id, knowledge_name,
+    status, source, label, my_answer, crt_user_code, crt_org_code,
+    crt_date, upd_user_code, upd_org_code,
+    upd_date
+    ) values <foreach collection="list" item="item" separator=",">(
+    #{item.wrongQuestionId,jdbcType=VARCHAR}, #{item.stage,jdbcType=INTEGER},
+    #{item.studentCode,jdbcType=VARCHAR}, #{item.questionId,jdbcType=VARCHAR}, #{item.subjectId,jdbcType=VARCHAR},
+    #{item.subjectName,jdbcType=VARCHAR}, #{item.bookId,jdbcType=VARCHAR}, #{item.bookName,jdbcType=VARCHAR},
+    #{item.knowledgeId,jdbcType=VARCHAR}, #{item.knowledgeName,jdbcType=VARCHAR},
+    #{item.status,jdbcType=VARCHAR}, #{item.source,jdbcType=VARCHAR}, #{item.label,jdbcType=VARCHAR}, #{item.myAnswer,jdbcType=VARCHAR},
+    #{item.crtUserCode,jdbcType=VARCHAR}, #{item.crtOrgCode,jdbcType=VARCHAR},
+    #{item.crtDate,jdbcType=TIMESTAMP}, #{item.updUserCode,jdbcType=VARCHAR}, #{item.updOrgCode,jdbcType=VARCHAR},
+    #{item.updDate,jdbcType=TIMESTAMP})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from student_wrong_question
+    where wrong_question_id in
+    <foreach close=")" collection="list" item="id" open="(" separator=",">
+      ${id}
+    </foreach>
+  </delete>
+</mapper>

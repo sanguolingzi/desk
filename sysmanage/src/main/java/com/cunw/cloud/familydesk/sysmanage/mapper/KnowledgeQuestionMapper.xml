@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.KnowledgeQuestionMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.KnowledgeQuestion">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="master_id" jdbcType="VARCHAR" property="masterId" />
+    <result column="quest_id" jdbcType="VARCHAR" property="questId" />
+    <result column="quest_order" jdbcType="INTEGER" property="questOrder" />
+    <result column="rank" jdbcType="INTEGER" property="rank" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from study_knowledge_question
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from study_knowledge_question
+    where 1!=1 
+      <if test="masterId != null and masterId != ''">
+        and master_id = #{masterId}
+      </if>
+      <if test="questId != null and questId != ''">
+        and quest_id = #{questId}
+      </if>
+      <if test="questOrder != null">
+        and quest_order = #{questOrder}
+      </if>
+      <if test="rank != null">
+        and rank = #{rank}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.KnowledgeQuestion">
+    insert into study_knowledge_question (id, master_id, quest_id, 
+      quest_order, rank)
+    values (#{id,jdbcType=VARCHAR}, #{masterId,jdbcType=VARCHAR}, #{questId,jdbcType=VARCHAR}, 
+      #{questOrder,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.KnowledgeQuestion">
+    insert into study_knowledge_question
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="masterId != null">
+        master_id,
+      </if>
+      <if test="questId != null">
+        quest_id,
+      </if>
+      <if test="questOrder != null">
+        quest_order,
+      </if>
+      <if test="rank != null">
+        rank,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="masterId != null">
+        #{masterId,jdbcType=VARCHAR},
+      </if>
+      <if test="questId != null">
+        #{questId,jdbcType=VARCHAR},
+      </if>
+      <if test="questOrder != null">
+        #{questOrder,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null">
+        #{rank,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.KnowledgeQuestion">
+    update study_knowledge_question
+    set master_id = #{masterId,jdbcType=VARCHAR},
+      quest_id = #{questId,jdbcType=VARCHAR},
+      quest_order = #{questOrder,jdbcType=INTEGER},
+    rank = #{rank,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.KnowledgeQuestion">
+    update study_knowledge_question
+    <set>
+      <if test="masterId != null">
+        master_id = #{masterId,jdbcType=VARCHAR},
+      </if>
+      <if test="questId != null">
+        quest_id = #{questId,jdbcType=VARCHAR},
+      </if>
+      <if test="questOrder != null">
+        quest_order = #{questOrder,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null">
+        rank = #{rank,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, master_id, quest_id, quest_order, rank
+    from study_knowledge_question
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select id, master_id, quest_id, quest_order, rank
+    from study_knowledge_question
+    <where> 
+      <if test="masterId != null and masterId != ''">
+        and master_id = #{masterId}
+      </if>
+      <if test="questId != null and questId != ''">
+        and quest_id = #{questId}
+      </if>
+      <if test="questOrder != null">
+        and quest_order = #{questOrder}
+      </if>
+      <if test="rank != null">
+        and rank = #{rank}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into study_knowledge_question (id, 
+      master_id, quest_id, quest_order,
+    rank
+    ) values <foreach collection="list" item="item" separator=",">(#{item.id,jdbcType=VARCHAR}, 
+      #{item.masterId,jdbcType=VARCHAR}, #{item.questId,jdbcType=VARCHAR}, #{item.questOrder,jdbcType=INTEGER}, 
+      #{item.rank,jdbcType=INTEGER})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from study_knowledge_question
+    where id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      ${id}
+    </foreach>
+  </delete>
+</mapper>

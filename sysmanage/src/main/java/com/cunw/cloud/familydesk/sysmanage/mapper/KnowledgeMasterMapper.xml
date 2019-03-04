@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.KnowledgeMasterMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.KnowledgeMaster">
+    <id column="master_id" jdbcType="VARCHAR" property="masterId" />
+    <result column="student_code" jdbcType="VARCHAR" property="studentCode" />
+    <result column="stage" jdbcType="VARCHAR" property="stage" />
+    <result column="subject_id" jdbcType="VARCHAR" property="subjectId" />
+    <result column="knowledge_id" jdbcType="VARCHAR" property="knowledgeId" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="star" jdbcType="INTEGER" property="star" />
+    <result column="rank" jdbcType="INTEGER" property="rank" />
+    <result column="crt_user_code" jdbcType="VARCHAR" property="crtUserCode" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="upd_date" jdbcType="TIMESTAMP" property="updDate" />
+  </resultMap>
+  <resultMap id="KnowledgeRankingMap" type="com.cunw.cloud.resource.model.question.QueryKnowledgeRanking">
+    <result column="knowledge_name" jdbcType="VARCHAR" property="knowledgeNames" />
+    <result column="student_code" jdbcType="VARCHAR" property="studentCode" />
+    <result column="total_score" jdbcType="INTEGER" property="totalScore" />
+    <result column="total_star" jdbcType="INTEGER" property="totalStar" />
+    <result column="rank" jdbcType="INTEGER" property="rank" />
+    <result column="star" jdbcType="INTEGER" property="star" />
+  </resultMap>
+  <resultMap id="AnswerRankingMap" type="com.cunw.cloud.resource.model.question.QueryAnswerRanking">
+    <result column="count_student" jdbcType="INTEGER" property="countStudent" />
+    <result column="sum_student" jdbcType="INTEGER" property="sumStudent" />
+  </resultMap>
+  <resultMap id="AccuracyRankingMap" type="com.cunw.cloud.resource.model.question.QueryAccuracyRanking">
+    <result column="st_star" jdbcType="INTEGER" property="stStar" />
+    <result column="student_code" jdbcType="VARCHAR" property="studentCode" />
+    <result column="rank" jdbcType="INTEGER" property="rank" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from study_knowledge_master
+    where master_id = #{masterId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from study_knowledge_master
+    where 1!=1
+    <if test="studentCode != null and studentCode != ''">
+      and student_code = #{studentCode}
+    </if>
+    <if test="stage != null and stage != ''">
+      and stage = #{stage}
+    </if>
+    <if test="subjectId != null and subjectId != ''">
+      and subject_id = #{subjectId}
+    </if>
+    <if test="knowledgeId != null and knowledgeId != ''">
+      and knowledge_id = #{knowledgeId}
+    </if>
+    <if test="score != null">
+      and score = #{score}
+    </if>
+    <if test="star != null">
+      and star = #{star}
+    </if>
+    <if test="rank != null">
+      and rank = #{rank}
+    </if>
+    <if test="crtUserCode != null and crtUserCode != ''">
+      and crt_user_code = #{crtUserCode}
+    </if>
+    <if test="crtDate != null">
+      and crt_date = #{crtDate}
+    </if>
+    <if test="updDate != null">
+      and upd_date = #{updDate}
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.KnowledgeMaster">
+    insert into study_knowledge_master (master_id, student_code, stage,
+    subject_id, knowledge_id, score,
+    star, rank, crt_user_code, crt_date,
+    upd_date)
+    values (#{masterId,jdbcType=VARCHAR}, #{studentCode,jdbcType=VARCHAR}, #{stage,jdbcType=VARCHAR},
+    #{subjectId,jdbcType=VARCHAR}, #{knowledgeId,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER},
+    #{star,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER}, #{crtUserCode,jdbcType=VARCHAR}, #{crtDate,jdbcType=TIMESTAMP},
+    #{updDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.KnowledgeMaster">
+    insert into study_knowledge_master
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="masterId != null">
+        master_id,
+      </if>
+      <if test="studentCode != null">
+        student_code,
+      </if>
+      <if test="stage != null">
+        stage,
+      </if>
+      <if test="subjectId != null">
+        subject_id,
+      </if>
+      <if test="knowledgeId != null">
+        knowledge_id,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="star != null">
+        star,
+      </if>
+      <if test="rank != null">
+        rank,
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="updDate != null">
+        upd_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="masterId != null">
+        #{masterId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCode != null">
+        #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null">
+        #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null">
+        #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeId != null">
+        #{knowledgeId,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="star != null">
+        #{star,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null">
+        #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="crtUserCode != null">
+        #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updDate != null">
+        #{updDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.KnowledgeMaster">
+    update study_knowledge_master
+    set student_code = #{studentCode,jdbcType=VARCHAR},
+    stage = #{stage,jdbcType=VARCHAR},
+    subject_id = #{subjectId,jdbcType=VARCHAR},
+    knowledge_id = #{knowledgeId,jdbcType=VARCHAR},
+    score = #{score,jdbcType=INTEGER},
+    star = #{star,jdbcType=INTEGER},
+    rank = #{rank,jdbcType=INTEGER},
+    crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+    crt_date = #{crtDate,jdbcType=TIMESTAMP},
+    upd_date = #{updDate,jdbcType=TIMESTAMP}
+    where master_id = #{masterId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.KnowledgeMaster">
+    update study_knowledge_master
+    <set>
+      <if test="studentCode != null">
+        student_code = #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null">
+        stage = #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null">
+        subject_id = #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeId != null">
+        knowledge_id = #{knowledgeId,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="star != null">
+        star = #{star,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null">
+        rank = #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updDate != null">
+        upd_date = #{updDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where master_id = #{masterId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select master_id, student_code, stage, subject_id, knowledge_id, score, star, rank, crt_user_code,
+    crt_date, upd_date
+    from study_knowledge_master
+    where master_id = #{masterId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select master_id, student_code, stage, subject_id, knowledge_id, score, star, rank, crt_user_code,
+    crt_date, upd_date
+    from study_knowledge_master
+    <where>
+      <if test="studentCode != null and studentCode != ''">
+        and student_code = #{studentCode}
+      </if>
+      <if test="stage != null and stage != ''">
+        and stage = #{stage}
+      </if>
+      <if test="subjectId != null and subjectId != ''">
+        and subject_id = #{subjectId}
+      </if>
+      <if test="knowledgeId != null and knowledgeId != ''">
+        and knowledge_id = #{knowledgeId}
+      </if>
+      <if test="score != null">
+        and score = #{score}
+      </if>
+      <if test="star != null">
+        and star = #{star}
+      </if>
+      <if test="rank != null">
+        and rank = #{rank}
+      </if>
+      <if test="crtUserCode != null and crtUserCode != ''">
+        and crt_user_code = #{crtUserCode}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="updDate != null">
+        and upd_date = #{updDate}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into study_knowledge_master (master_id,
+    student_code, stage, subject_id,
+    knowledge_id, score, star, rank,
+    crt_user_code, crt_date, upd_date
+
+    ) values <foreach collection="list" item="item" separator=",">(#{item.masterId,jdbcType=VARCHAR},
+    #{item.studentCode,jdbcType=VARCHAR}, #{item.stage,jdbcType=VARCHAR}, #{item.subjectId,jdbcType=VARCHAR},
+    #{item.knowledgeId,jdbcType=VARCHAR}, #{item.score,jdbcType=INTEGER}, #{item.star,jdbcType=INTEGER}, #{item.rank,jdbcType=INTEGER},
+    #{item.crtUserCode,jdbcType=VARCHAR}, #{item.crtDate,jdbcType=TIMESTAMP}, #{item.updDate,jdbcType=TIMESTAMP}
+    )</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from study_knowledge_master
+    where master_id in
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      ${id}
+    </foreach>
+  </delete>
+  <select id="selectByDirIds" resultMap="BaseResultMap">
+    select master_id, student_code, stage, subject_id, knowledge_id, score, star, rank, crt_user_code,
+    crt_date, upd_date
+    from study_knowledge_master
+    where student_code = #{studentCode} and knowledge_id in
+    <foreach collection="dirIds" item="id" open="(" close=")" separator=",">
+      ${id}
+    </foreach>
+  </select>
+
+  <select id="selectByCorrectRate" parameterType="java.lang.String" resultMap="KnowledgeRankingMap">
+    SELECT * FROM study_test_answer WHERE
+	test_id IN (
+		SELECT test_id FROM study_test test WHERE test.master_id IN (
+				SELECT master_id FROM study_knowledge_master WHERE knowledge_id = #{knowledgeId}) AND student_code=#{studentCode})
+  </select>
+
+  <select id="selectByCorrectRateMax" parameterType="java.lang.String" resultMap="KnowledgeRankingMap">
+    select MAX(st.star) star,skm.rank from study_knowledge_master skm LEFT JOIN  study_test st   on st.master_id=skm.master_id where  skm.knowledge_id = #{knowledgeId} AND skm.student_code=#{studentCode}  group by skm.rank;
+  </select>
+
+  <select id="selectByRank" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT skm.rank FROM study_knowledge_master skm
+    where skm.student_code = #{studentCode}  and skm.knowledge_id = #{knowledgeId}
+  </select>
+  <select id="selectByRankCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT COUNT(*)/2*100  FROM study_knowledge_master skm where skm.knowledge_id = #{knowledgeId}
+    and skm.rank &lt;#{rank}
+  </select>
+
+  <select id="selectByStudetArea" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT sst.student_code FROM sys_student sst where sst.grade_code in(SELECT so.org_code FROM sys_org so where so.p_org_code in(SELECT ss.school_code FROM sys_school ss WHERE ss.area = (
+    SELECT sc.area FROM sys_school sc
+    WHERE sc.school_code = (
+    SELECT so.p_org_code FROM sys_org so WHERE so.org_code = (
+    SELECT st.grade_code from sys_student st where st.student_code = #{studentCode}
+    )
+    )
+    )))
+  </select>
+
+
+  <select id="selectByStudentRanking" parameterType="java.util.HashMap" resultMap="KnowledgeRankingMap">
+    		select MAX(skm.star) star,skm.rank,skm.student_code from study_knowledge_master skm where skm.knowledge_id=#{knowledgeId} group by skm.student_code,skm.rank;
+  </select>
+
+  <select id="selectByStudentRank" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+    SELECT stkma.rank FROM study_knowledge_master stkma 	where stkma.student_code = #{studentCode} and stkma.knowledge_id = #{knowledgeId}
+  </select>
+
+  <select id="selectByStudentRankStar" parameterType="java.util.HashMap" resultMap="AccuracyRankingMap">
+    select MAX(st.star) as st_star,st.student_code,st.rank  from study_test st where st.rank &lt;= (
+    SELECT skm.rank FROM study_knowledge_master skm
+    where skm.student_code = #{studentCode} and skm.knowledge_id = #{knowledgeId}
+
+    ) and st.student_code in (
+    SELECT sst.student_code FROM sys_student sst where sst.grade_code in(SELECT so.org_code FROM sys_org so where so.p_org_code in(SELECT ss.school_code FROM 	sys_school ss WHERE ss.area = (
+    SELECT sc.area FROM sys_school sc
+    WHERE sc.school_code = (
+    SELECT so.p_org_code FROM sys_org so WHERE so.org_code = (
+    SELECT st.grade_code from sys_student st where st.student_code = #{studentCode}
+    )
+    )
+    )))
+    ) and st.student_code in(
+    select stkm.student_code from study_knowledge_master stkm where stkm.rank= (
+    SELECT stkma.rank FROM study_knowledge_master stkma
+    where stkma.student_code = #{studentCode} and stkma.knowledge_id = #{knowledgeId}
+    ) and  stkm.knowledge_id = #{knowledgeId}
+    )
+    GROUP BY st.student_code ,st.rank
+  </select>
+  <update id="updateRank" parameterType="com.cunw.cloud.familydesk.common.model.KnowledgeMaster">
+    update study_knowledge_master
+    set score = #{score,jdbcType=INTEGER},
+    star = #{star,jdbcType=INTEGER},
+    rank = #{rank,jdbcType=INTEGER}
+    where master_id = #{masterId,jdbcType=VARCHAR}
+  </update>
+</mapper>

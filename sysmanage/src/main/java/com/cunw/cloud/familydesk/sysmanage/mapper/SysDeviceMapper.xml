@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysDeviceMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysDevice">
+    <id column="device_id" jdbcType="VARCHAR" property="deviceId" />
+    <result column="device_no" jdbcType="VARCHAR" property="deviceNo" />
+    <result column="type_id" jdbcType="VARCHAR" property="typeId" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="gis_id" jdbcType="VARCHAR" property="gisId" />
+    <result column="imei" jdbcType="VARCHAR" property="imei" />
+    <result column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="qr_code" jdbcType="VARCHAR" property="qrCode" />
+    <result column="mac" jdbcType="VARCHAR" property="mac" />
+    <result column="prov_date" jdbcType="TIMESTAMP" property="provDate" />
+    <result column="prov_addr" jdbcType="VARCHAR" property="provAddr" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="inst_addr" jdbcType="VARCHAR" property="instAddr" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="rf_id" jdbcType="VARCHAR" property="rfId" />
+    <result column="ch" jdbcType="VARCHAR" property="ch" />
+    <result column="in_mobile" jdbcType="VARCHAR" property="inMobile" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_device
+    where device_id = #{deviceId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from sys_device
+    where 1!=1 
+      <if test="deviceNo != null and deviceNo != ''">
+        and device_no = #{deviceNo}
+      </if>
+      <if test="typeId != null and typeId != ''">
+        and type_id = #{typeId}
+      </if>
+      <if test="type != null and type != ''">
+        and type = #{type}
+      </if>
+      <if test="gisId != null and gisId != ''">
+        and gis_id = #{gisId}
+      </if>
+      <if test="imei != null and imei != ''">
+        and imei = #{imei}
+      </if>
+      <if test="sn != null and sn != ''">
+        and sn = #{sn}
+      </if>
+      <if test="qrCode != null and qrCode != ''">
+        and qr_code = #{qrCode}
+      </if>
+      <if test="mac != null and mac != ''">
+        and mac = #{mac}
+      </if>
+      <if test="provDate != null">
+        and prov_date = #{provDate}
+      </if>
+      <if test="provAddr != null and provAddr != ''">
+        and prov_addr = #{provAddr}
+      </if>
+      <if test="contact != null and contact != ''">
+        and contact = #{contact}
+      </if>
+      <if test="instAddr != null and instAddr != ''">
+        and inst_addr = #{instAddr}
+      </if>
+      <if test="status != null and status != ''">
+        and status = #{status}
+      </if>
+      <if test="rfId != null and rfId != ''">
+        and rf_id = #{rfId}
+      </if>
+      <if test="ch != null and ch != ''">
+        and ch = #{ch}
+      </if>
+      <if test="inMobile != null and inMobile != ''">
+        and in_mobile = #{inMobile}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysDevice">
+    insert into sys_device (device_id, device_no, type_id, 
+      type, gis_id, imei, 
+      sn, qr_code, mac, prov_date, 
+      prov_addr, contact, inst_addr, 
+      status, rf_id, ch, in_mobile, 
+      crt_date)
+    values (#{deviceId,jdbcType=VARCHAR}, #{deviceNo,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{gisId,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR}, 
+      #{sn,jdbcType=VARCHAR}, #{qrCode,jdbcType=VARCHAR}, #{mac,jdbcType=VARCHAR}, #{provDate,jdbcType=TIMESTAMP}, 
+      #{provAddr,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, #{instAddr,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{rfId,jdbcType=VARCHAR}, #{ch,jdbcType=VARCHAR}, #{inMobile,jdbcType=VARCHAR}, 
+      #{crtDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysDevice">
+    insert into sys_device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="deviceNo != null">
+        device_no,
+      </if>
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="gisId != null">
+        gis_id,
+      </if>
+      <if test="imei != null">
+        imei,
+      </if>
+      <if test="sn != null">
+        sn,
+      </if>
+      <if test="qrCode != null">
+        qr_code,
+      </if>
+      <if test="mac != null">
+        mac,
+      </if>
+      <if test="provDate != null">
+        prov_date,
+      </if>
+      <if test="provAddr != null">
+        prov_addr,
+      </if>
+      <if test="contact != null">
+        contact,
+      </if>
+      <if test="instAddr != null">
+        inst_addr,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="rfId != null">
+        rf_id,
+      </if>
+      <if test="ch != null">
+        ch,
+      </if>
+      <if test="inMobile != null">
+        in_mobile,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNo != null">
+        #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="gisId != null">
+        #{gisId,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null">
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="sn != null">
+        #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="qrCode != null">
+        #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null">
+        #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="provDate != null">
+        #{provDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provAddr != null">
+        #{provAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="instAddr != null">
+        #{instAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="rfId != null">
+        #{rfId,jdbcType=VARCHAR},
+      </if>
+      <if test="ch != null">
+        #{ch,jdbcType=VARCHAR},
+      </if>
+      <if test="inMobile != null">
+        #{inMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysDevice">
+    update sys_device
+    set device_no = #{deviceNo,jdbcType=VARCHAR},
+      type_id = #{typeId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      gis_id = #{gisId,jdbcType=VARCHAR},
+      imei = #{imei,jdbcType=VARCHAR},
+      sn = #{sn,jdbcType=VARCHAR},
+      qr_code = #{qrCode,jdbcType=VARCHAR},
+      mac = #{mac,jdbcType=VARCHAR},
+      prov_date = #{provDate,jdbcType=TIMESTAMP},
+      prov_addr = #{provAddr,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      inst_addr = #{instAddr,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      rf_id = #{rfId,jdbcType=VARCHAR},
+      ch = #{ch,jdbcType=VARCHAR},
+      in_mobile = #{inMobile,jdbcType=VARCHAR},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP}
+    where device_id = #{deviceId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.SysDevice">
+    update sys_device
+    <set>
+      <if test="deviceNo != null">
+        device_no = #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="gisId != null">
+        gis_id = #{gisId,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null">
+        imei = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="sn != null">
+        sn = #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="qrCode != null">
+        qr_code = #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null">
+        mac = #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="provDate != null">
+        prov_date = #{provDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provAddr != null">
+        prov_addr = #{provAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="instAddr != null">
+        inst_addr = #{instAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="rfId != null">
+        rf_id = #{rfId,jdbcType=VARCHAR},
+      </if>
+      <if test="ch != null">
+        ch = #{ch,jdbcType=VARCHAR},
+      </if>
+      <if test="inMobile != null">
+        in_mobile = #{inMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where device_id = #{deviceId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select device_id, device_no, type_id, type, gis_id, imei, sn, qr_code, mac, prov_date, 
+    prov_addr, contact, inst_addr, status, rf_id, ch, in_mobile, crt_date
+    from sys_device
+    where device_id = #{deviceId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select device_id, device_no, type_id, type, gis_id, imei, sn, qr_code, mac, prov_date, 
+    prov_addr, contact, inst_addr, status, rf_id, ch, in_mobile, crt_date
+    from sys_device
+    <where> 
+      <if test="deviceNo != null and deviceNo != ''">
+        and device_no = #{deviceNo}
+      </if>
+      <if test="typeId != null and typeId != ''">
+        and type_id = #{typeId}
+      </if>
+      <if test="type != null and type != ''">
+        and type = #{type}
+      </if>
+      <if test="gisId != null and gisId != ''">
+        and gis_id = #{gisId}
+      </if>
+      <if test="imei != null and imei != ''">
+        and imei = #{imei}
+      </if>
+      <if test="sn != null and sn != ''">
+        and sn = #{sn}
+      </if>
+      <if test="qrCode != null and qrCode != ''">
+        and qr_code = #{qrCode}
+      </if>
+      <if test="mac != null and mac != ''">
+        and mac = #{mac}
+      </if>
+      <if test="provDate != null">
+        and prov_date = #{provDate}
+      </if>
+      <if test="provAddr != null and provAddr != ''">
+        and prov_addr = #{provAddr}
+      </if>
+      <if test="contact != null and contact != ''">
+        and contact = #{contact}
+      </if>
+      <if test="instAddr != null and instAddr != ''">
+        and inst_addr = #{instAddr}
+      </if>
+      <if test="status != null and status != ''">
+        and status = #{status}
+      </if>
+      <if test="rfId != null and rfId != ''">
+        and rf_id = #{rfId}
+      </if>
+      <if test="ch != null and ch != ''">
+        and ch = #{ch}
+      </if>
+      <if test="inMobile != null and inMobile != ''">
+        and in_mobile = #{inMobile}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sys_device (device_id, 
+      device_no, type_id, type, 
+      gis_id, imei, sn, 
+      qr_code, mac, prov_date, 
+      prov_addr, contact, inst_addr, 
+      status, rf_id, ch, 
+      in_mobile, crt_date
+    ) values <foreach collection="list" item="item" separator=",">(#{item.deviceId,jdbcType=VARCHAR}, 
+      #{item.deviceNo,jdbcType=VARCHAR}, #{item.typeId,jdbcType=VARCHAR}, #{item.type,jdbcType=VARCHAR}, 
+      #{item.gisId,jdbcType=VARCHAR}, #{item.imei,jdbcType=VARCHAR}, #{item.sn,jdbcType=VARCHAR}, 
+      #{item.qrCode,jdbcType=VARCHAR}, #{item.mac,jdbcType=VARCHAR}, #{item.provDate,jdbcType=TIMESTAMP}, 
+      #{item.provAddr,jdbcType=VARCHAR}, #{item.contact,jdbcType=VARCHAR}, #{item.instAddr,jdbcType=VARCHAR}, 
+      #{item.status,jdbcType=VARCHAR}, #{item.rfId,jdbcType=VARCHAR}, #{item.ch,jdbcType=VARCHAR}, 
+      #{item.inMobile,jdbcType=VARCHAR}, #{item.crtDate,jdbcType=TIMESTAMP})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from sys_device
+    where device_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

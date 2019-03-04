@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.StudySmartAssemblyMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.StudySmartAssembly">
+    <id column="assembly_id" jdbcType="VARCHAR" property="assemblyId" />
+    <result column="paperId" jdbcType="VARCHAR" property="paperId" />
+    <result column="student_code" jdbcType="VARCHAR" property="studentCode" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="stage" jdbcType="VARCHAR" property="stage" />
+    <result column="subject_id" jdbcType="VARCHAR" property="subjectId" />
+    <result column="version_id" jdbcType="VARCHAR" property="versionId" />
+    <result column="bookId" jdbcType="VARCHAR" property="bookid" />
+    <result column="chapters" jdbcType="VARCHAR" property="chapters" />
+    <result column="knowledges" jdbcType="VARCHAR" property="knowledges" />
+    <result column="difficult" jdbcType="TINYINT" property="difficult" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="use_Time" jdbcType="INTEGER" property="useTime" />
+    <result column="crt_user_code" jdbcType="VARCHAR" property="crtUserCode" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="upd_date" jdbcType="TIMESTAMP" property="updDate" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from study_smart_assembly
+    where assembly_id = #{assemblyId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from study_smart_assembly
+    where 1!=1 
+      <if test="studentCode != null and studentCode != ''">
+        and student_code = #{studentCode}
+      </if>
+      <if test="title != null and title != ''">
+        and title = #{title}
+      </if>
+      <if test="stage != null and stage != ''">
+        and stage = #{stage}
+      </if>
+      <if test="subjectId != null and subjectId != ''">
+        and subject_id = #{subjectId}
+      </if>
+      <if test="versionId != null and versionId != ''">
+        and version_id = #{versionId}
+      </if>
+      <if test="bookid != null and bookid != ''">
+        and bookId = #{bookid}
+      </if>
+      <if test="chapters != null and chapters != ''">
+        and chapters = #{chapters}
+      </if>
+      <if test="knowledges != null and knowledges != ''">
+        and knowledges = #{knowledges}
+      </if>
+      <if test="difficult != null">
+        and difficult = #{difficult}
+      </if>
+      <if test="type != null">
+        and type = #{type}
+      </if>
+      <if test="num != null">
+        and num = #{num}
+      </if>
+      <if test="crtUserCode != null and crtUserCode != ''">
+        and crt_user_code = #{crtUserCode}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="updDate != null">
+        and upd_date = #{updDate}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.StudySmartAssembly">
+    insert into study_smart_assembly (assembly_id, student_code, paperId, title,
+      stage, subject_id, version_id, 
+      bookId, chapters, knowledges, 
+      difficult, type, num, score , use_Time,
+      crt_user_code, crt_date, upd_date, 
+      status)
+    values (#{assemblyId,jdbcType=VARCHAR}, #{studentCode,jdbcType=VARCHAR},#{paperId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+      #{stage,jdbcType=VARCHAR}, #{subjectId,jdbcType=VARCHAR}, #{versionId,jdbcType=VARCHAR}, 
+      #{bookid,jdbcType=VARCHAR}, #{chapters,jdbcType=VARCHAR}, #{knowledges,jdbcType=VARCHAR}, 
+      #{difficult,jdbcType=TINYINT}, #{type,jdbcType=TINYINT}, #{num,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, #{useTime,jdbcType=INTEGER},
+      #{crtUserCode,jdbcType=VARCHAR}, #{crtDate,jdbcType=TIMESTAMP}, #{updDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.StudySmartAssembly">
+    insert into study_smart_assembly
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="assemblyId != null">
+        assembly_id,
+      </if>
+      <if test="studentCode != null">
+        student_code,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="stage != null">
+        stage,
+      </if>
+      <if test="subjectId != null">
+        subject_id,
+      </if>
+      <if test="versionId != null">
+        version_id,
+      </if>
+      <if test="bookid != null">
+        bookId,
+      </if>
+      <if test="chapters != null">
+        chapters,
+      </if>
+      <if test="knowledges != null">
+        knowledges,
+      </if>
+      <if test="difficult != null">
+        difficult,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="updDate != null">
+        upd_date,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="assemblyId != null">
+        #{assemblyId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCode != null">
+        #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null">
+        #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null">
+        #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="versionId != null">
+        #{versionId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookid != null">
+        #{bookid,jdbcType=VARCHAR},
+      </if>
+      <if test="chapters != null">
+        #{chapters,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledges != null">
+        #{knowledges,jdbcType=VARCHAR},
+      </if>
+      <if test="difficult != null">
+        #{difficult,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="crtUserCode != null">
+        #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updDate != null">
+        #{updDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.StudySmartAssembly">
+    update study_smart_assembly
+    set student_code = #{studentCode,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      stage = #{stage,jdbcType=VARCHAR},
+      subject_id = #{subjectId,jdbcType=VARCHAR},
+      version_id = #{versionId,jdbcType=VARCHAR},
+      bookId = #{bookid,jdbcType=VARCHAR},
+      chapters = #{chapters,jdbcType=VARCHAR},
+      knowledges = #{knowledges,jdbcType=VARCHAR},
+      difficult = #{difficult,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
+      num = #{num,jdbcType=INTEGER},
+      score = #{score,jdbcType=INTEGER},
+      crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      upd_date = #{updDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT}
+    where assembly_id = #{assemblyId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.StudySmartAssembly">
+    update study_smart_assembly
+    <set>
+      <if test="studentCode != null">
+        student_code = #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null">
+        stage = #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null">
+        subject_id = #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="versionId != null">
+        version_id = #{versionId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookid != null">
+        bookId = #{bookid,jdbcType=VARCHAR},
+      </if>
+      <if test="chapters != null">
+        chapters = #{chapters,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledges != null">
+        knowledges = #{knowledges,jdbcType=VARCHAR},
+      </if>
+      <if test="difficult != null">
+        difficult = #{difficult,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updDate != null">
+        upd_date = #{updDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where assembly_id = #{assemblyId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select assembly_id, student_code, title,paperId, stage, subject_id, version_id, bookId, chapters,
+    knowledges, difficult, type, num, score, use_Time, crt_user_code, crt_date, upd_date, status
+    from study_smart_assembly
+    where assembly_id = #{assemblyId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select assembly_id, student_code, title, paperId,stage, subject_id, version_id, bookId, chapters,
+    knowledges, difficult, type, num, score, use_Time, crt_user_code, crt_date, upd_date, status
+    from study_smart_assembly
+    <where> 
+      <if test="studentCode != null and studentCode != ''">
+        and student_code = #{studentCode}
+      </if>
+      <if test="title != null and title != ''">
+        and title = #{title}
+      </if>
+      <if test="stage != null and stage != ''">
+        and stage = #{stage}
+      </if>
+      <if test="subjectId != null and subjectId != ''">
+        and subject_id = #{subjectId}
+      </if>
+      <if test="versionId != null and versionId != ''">
+        and version_id = #{versionId}
+      </if>
+      <if test="bookid != null and bookid != ''">
+        and bookId = #{bookid}
+      </if>
+      <if test="chapters != null and chapters != ''">
+        and chapters = #{chapters}
+      </if>
+      <if test="knowledges != null and knowledges != ''">
+        and knowledges = #{knowledges}
+      </if>
+      <if test="difficult != null">
+        and difficult = #{difficult}
+      </if>
+      <if test="type != null">
+        and type = #{type}
+      </if>
+      <if test="num != null">
+        and num = #{num}
+      </if>
+      <if test="score != null">
+        and score = #{score}
+      </if>
+      <if test="crtUserCode != null and crtUserCode != ''">
+        and crt_user_code = #{crtUserCode}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="updDate != null">
+        and upd_date = #{updDate}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into study_smart_assembly (assembly_id, 
+      student_code,paperId, title, stage,
+      subject_id, version_id, bookId, 
+      chapters, knowledges, difficult, 
+      type, num, score , use_time, crt_user_code,
+      crt_date, upd_date, status
+      
+    ) values <foreach collection="list" item="item" separator=",">(#{item.assemblyId,jdbcType=VARCHAR}, 
+      #{item.studentCode,jdbcType=VARCHAR},#{item.paperId,jdbcType=VARCHAR}, #{item.title,jdbcType=VARCHAR}, #{item.stage,jdbcType=VARCHAR},
+      #{item.subjectId,jdbcType=VARCHAR}, #{item.versionId,jdbcType=VARCHAR}, #{item.bookid,jdbcType=VARCHAR}, 
+      #{item.chapters,jdbcType=VARCHAR}, #{item.knowledges,jdbcType=VARCHAR}, #{item.difficult,jdbcType=TINYINT}, 
+      #{item.type,jdbcType=TINYINT}, #{item.num,jdbcType=INTEGER}, #{item.score,jdbcType=INTEGER}, #{item.useTime,jdbcType=INTEGER}, #{item.crtUserCode,jdbcType=VARCHAR},
+      #{item.crtDate,jdbcType=TIMESTAMP}, #{item.updDate,jdbcType=TIMESTAMP}, #{item.status,jdbcType=TINYINT}
+      )</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from study_smart_assembly
+    where assembly_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      ${id}
+    </foreach>
+  </delete>
+</mapper>

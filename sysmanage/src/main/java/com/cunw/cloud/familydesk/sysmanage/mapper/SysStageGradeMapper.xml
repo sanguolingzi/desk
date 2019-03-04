@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysStageGradeMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysStageGrade">
+    <id column="stage_grade_id" jdbcType="VARCHAR" property="stageGradeId" />
+    <result column="stage_id" jdbcType="VARCHAR" property="stageId" />
+    <result column="grade_id" jdbcType="VARCHAR" property="gradeId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_stage_grade
+    where stage_grade_id = #{stageGradeId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from sys_stage_grade
+    where 1!=1 
+      <if test="stageId != null and stageId != ''">
+        and stage_id = #{stageId}
+      </if>
+      <if test="gradeId != null and gradeId != ''">
+        and grade_id = #{gradeId}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysStageGrade">
+    insert into sys_stage_grade (stage_grade_id, stage_id, grade_id, 
+      status)
+    values (#{stageGradeId,jdbcType=VARCHAR}, #{stageId,jdbcType=VARCHAR}, #{gradeId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysStageGrade">
+    insert into sys_stage_grade
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stageGradeId != null">
+        stage_grade_id,
+      </if>
+      <if test="stageId != null">
+        stage_id,
+      </if>
+      <if test="gradeId != null">
+        grade_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stageGradeId != null">
+        #{stageGradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="stageId != null">
+        #{stageId,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeId != null">
+        #{gradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysStageGrade">
+    update sys_stage_grade
+    set stage_id = #{stageId,jdbcType=VARCHAR},
+      grade_id = #{gradeId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT}
+    where stage_grade_id = #{stageGradeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.SysStageGrade">
+    update sys_stage_grade
+    <set>
+      <if test="stageId != null">
+        stage_id = #{stageId,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeId != null">
+        grade_id = #{gradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where stage_grade_id = #{stageGradeId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select stage_grade_id, stage_id, grade_id, status
+    from sys_stage_grade
+    where stage_grade_id = #{stageGradeId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select stage_grade_id, stage_id, grade_id, status
+    from sys_stage_grade
+    <where> 
+      <if test="stageId != null and stageId != ''">
+        and stage_id = #{stageId}
+      </if>
+      <if test="gradeId != null and gradeId != ''">
+        and grade_id = #{gradeId}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sys_stage_grade (stage_grade_id, 
+      stage_id, grade_id, status
+      
+    ) values <foreach collection="list" item="item" separator=",">(#{item.stageGradeId,jdbcType=VARCHAR}, 
+      #{item.stageId,jdbcType=VARCHAR}, #{item.gradeId,jdbcType=VARCHAR}, #{item.status,jdbcType=TINYINT}
+      )</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from sys_stage_grade
+    where stage_grade_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+
+  <select id="selectStageGradeCache" resultType="com.cunw.cloud.familydesk.common.model.SysStageGradeCache">
+        select
+          s.grade_code "gradeCode",
+          s.grade_name "gradeName",
+          ssg.stage_id "stageId"
+        from sys_grade s
+        left join sys_stage_grade ssg on s.grade_id = ssg.grade_id
+        where s.`status` = 1
+        and ssg.`status` = 1
+  </select>
+</mapper>

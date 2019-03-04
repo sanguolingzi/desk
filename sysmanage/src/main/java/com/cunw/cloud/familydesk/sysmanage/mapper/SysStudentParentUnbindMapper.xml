@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysStudentParentUnbindMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysStudentParentUnbind">
+    <id column="stu_par_unbind_id" jdbcType="VARCHAR" property="stuParUnbindId" />
+    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_student_parent_unbind
+    where stu_par_unbind_id = #{stuParUnbindId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from sys_student_parent_unbind
+    where 1!=1 
+      <if test="studentId != null and studentId != ''">
+        and student_id = #{studentId}
+      </if>
+      <if test="parentId != null and parentId != ''">
+        and parent_id = #{parentId}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysStudentParentUnbind">
+    insert into sys_student_parent_unbind (stu_par_unbind_id, student_id, parent_id, 
+      crt_date)
+    values (#{stuParUnbindId,jdbcType=VARCHAR}, #{studentId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{crtDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysStudentParentUnbind">
+    insert into sys_student_parent_unbind
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stuParUnbindId != null">
+        stu_par_unbind_id,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stuParUnbindId != null">
+        #{stuParUnbindId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysStudentParentUnbind">
+    update sys_student_parent_unbind
+    set student_id = #{studentId,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP}
+    where stu_par_unbind_id = #{stuParUnbindId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.SysStudentParentUnbind">
+    update sys_student_parent_unbind
+    <set>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where stu_par_unbind_id = #{stuParUnbindId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select stu_par_unbind_id, student_id, parent_id, crt_date
+    from sys_student_parent_unbind
+    where stu_par_unbind_id = #{stuParUnbindId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select stu_par_unbind_id, student_id, parent_id, crt_date
+    from sys_student_parent_unbind
+    <where> 
+      <if test="studentId != null and studentId != ''">
+        and student_id = #{studentId}
+      </if>
+      <if test="parentId != null and parentId != ''">
+        and parent_id = #{parentId}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sys_student_parent_unbind (stu_par_unbind_id, 
+      student_id, parent_id, crt_date
+      
+    ) values <foreach collection="list" item="item" separator=",">(#{item.stuParUnbindId,jdbcType=VARCHAR}, 
+      #{item.studentId,jdbcType=VARCHAR}, #{item.parentId,jdbcType=VARCHAR}, #{item.crtDate,jdbcType=TIMESTAMP}
+      )</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from sys_student_parent_unbind
+    where stu_par_unbind_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

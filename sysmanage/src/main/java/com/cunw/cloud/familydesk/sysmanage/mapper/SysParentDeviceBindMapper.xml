@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysParentDeviceBindMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysParentDeviceBind">
+    <id column="bind_id" jdbcType="VARCHAR" property="bindId" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="device_id" jdbcType="VARCHAR" property="deviceId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_parent_device_bind
+    where bind_id = #{bindId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from sys_parent_device_bind
+    where 1!=1 
+      <if test="parentId != null and parentId != ''">
+        and parent_id = #{parentId}
+      </if>
+      <if test="deviceId != null and deviceId != ''">
+        and device_id = #{deviceId}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysParentDeviceBind">
+    insert into sys_parent_device_bind (bind_id, parent_id, device_id, 
+      status, crt_date)
+    values (#{bindId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{crtDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysParentDeviceBind">
+    insert into sys_parent_device_bind
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bindId != null">
+        bind_id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bindId != null">
+        #{bindId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysParentDeviceBind">
+    update sys_parent_device_bind
+    set parent_id = #{parentId,jdbcType=VARCHAR},
+      device_id = #{deviceId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP}
+    where bind_id = #{bindId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.SysParentDeviceBind">
+    update sys_parent_device_bind
+    <set>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where bind_id = #{bindId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select bind_id, parent_id, device_id, status, crt_date
+    from sys_parent_device_bind
+    where bind_id = #{bindId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select bind_id, parent_id, device_id, status, crt_date
+    from sys_parent_device_bind
+    <where> 
+      <if test="parentId != null and parentId != ''">
+        and parent_id = #{parentId}
+      </if>
+      <if test="deviceId != null and deviceId != ''">
+        and device_id = #{deviceId}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sys_parent_device_bind (bind_id, 
+      parent_id, device_id, status, 
+      crt_date
+    ) values <foreach collection="list" item="item" separator=",">(#{item.bindId,jdbcType=VARCHAR}, 
+      #{item.parentId,jdbcType=VARCHAR}, #{item.deviceId,jdbcType=VARCHAR}, #{item.status,jdbcType=TINYINT}, 
+      #{item.crtDate,jdbcType=TIMESTAMP})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from sys_parent_device_bind
+    where bind_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

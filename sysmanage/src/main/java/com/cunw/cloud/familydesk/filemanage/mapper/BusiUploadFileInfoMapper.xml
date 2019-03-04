@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.filemanage.mapper.BusiUploadFileInfoMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.BusiUploadFileInfo">
+    <id column="file_id" jdbcType="VARCHAR" property="fileId" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="size" jdbcType="INTEGER" property="size" />
+    <result column="file_type" jdbcType="TINYINT" property="fileType" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="exten" jdbcType="VARCHAR" property="exten" />
+    <result column="has_references" jdbcType="TINYINT" property="hasReferences" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from busi_upload_file_info
+    where file_id = #{fileId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from busi_upload_file_info
+    where 1!=1 
+      <if test="fileName != null and fileName != ''">
+        and file_name = #{fileName}
+      </if>
+      <if test="path != null and path != ''">
+        and path = #{path}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="size != null">
+        and size = #{size}
+      </if>
+      <if test="fileType != null">
+        and file_type = #{fileType}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="exten != null and exten != ''">
+        and exten = #{exten}
+      </if>
+      <if test="hasReferences != null">
+        and has_references = #{hasReferences}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.BusiUploadFileInfo">
+    insert into busi_upload_file_info (file_id, file_name, path, 
+      status, size, file_type, 
+      crt_date, exten, has_references
+      )
+    values (#{fileId,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{size,jdbcType=INTEGER}, #{fileType,jdbcType=TINYINT}, 
+      #{crtDate,jdbcType=TIMESTAMP}, #{exten,jdbcType=VARCHAR}, #{hasReferences,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.BusiUploadFileInfo">
+    insert into busi_upload_file_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fileId != null">
+        file_id,
+      </if>
+      <if test="fileName != null">
+        file_name,
+      </if>
+      <if test="path != null">
+        path,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="fileType != null">
+        file_type,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="exten != null">
+        exten,
+      </if>
+      <if test="hasReferences != null">
+        has_references,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fileId != null">
+        #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=INTEGER},
+      </if>
+      <if test="fileType != null">
+        #{fileType,jdbcType=TINYINT},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exten != null">
+        #{exten,jdbcType=VARCHAR},
+      </if>
+      <if test="hasReferences != null">
+        #{hasReferences,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.BusiUploadFileInfo">
+    update busi_upload_file_info
+    set file_name = #{fileName,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      size = #{size,jdbcType=INTEGER},
+      file_type = #{fileType,jdbcType=TINYINT},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      exten = #{exten,jdbcType=VARCHAR},
+      has_references = #{hasReferences,jdbcType=TINYINT}
+    where file_id = #{fileId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.BusiUploadFileInfo">
+    update busi_upload_file_info
+    <set>
+      <if test="fileName != null">
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=INTEGER},
+      </if>
+      <if test="fileType != null">
+        file_type = #{fileType,jdbcType=TINYINT},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exten != null">
+        exten = #{exten,jdbcType=VARCHAR},
+      </if>
+      <if test="hasReferences != null">
+        has_references = #{hasReferences,jdbcType=TINYINT},
+      </if>
+    </set>
+    where file_id = #{fileId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select file_id, file_name, path, status, size, file_type, crt_date, exten, has_references
+    from busi_upload_file_info
+    where file_id = #{fileId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select file_id, file_name, path, status, size, file_type, crt_date, exten, has_references
+    from busi_upload_file_info
+    <where> 
+      <if test="fileName != null and fileName != ''">
+        and file_name = #{fileName}
+      </if>
+      <if test="path != null and path != ''">
+        and path = #{path}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+      <if test="size != null">
+        and size = #{size}
+      </if>
+      <if test="fileType != null">
+        and file_type = #{fileType}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="exten != null and exten != ''">
+        and exten = #{exten}
+      </if>
+      <if test="hasReferences != null">
+        and has_references = #{hasReferences}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into busi_upload_file_info (file_id, 
+      file_name, path, status, 
+      size, file_type, crt_date, 
+      exten, has_references
+    ) values <foreach collection="list" item="item" separator=",">(#{item.fileId,jdbcType=VARCHAR}, 
+      #{item.fileName,jdbcType=VARCHAR}, #{item.path,jdbcType=VARCHAR}, #{item.status,jdbcType=TINYINT}, 
+      #{item.size,jdbcType=INTEGER}, #{item.fileType,jdbcType=TINYINT}, #{item.crtDate,jdbcType=TIMESTAMP}, 
+      #{item.exten,jdbcType=VARCHAR}, #{item.hasReferences,jdbcType=TINYINT})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from busi_upload_file_info
+    where file_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+
+
+  <select id="selectUnReferencesFile" resultType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+        s.file_id,
+        s.path,
+        s.file_name,
+        s.file_type
+    from busi_upload_file_info s
+    <!--  状态 为 未引用-->
+    where s.has_references = 0
+    and s.status = 1
+    <!-- 重试次数小于 3-->
+    and s.retry_count &lt; 3
+    <!--
+        比较当前时间和 数据的crt_date 若 大于指定的expireDay 则认为已过期
+       -->
+    and datediff(now(),s.crt_date) > #{expireDay}
+    order by s.crt_date desc
+  </select>
+
+  <update id="addRetryCount" parameterType="String">
+    update busi_upload_file_info
+    set retry_count = retry_count + 1
+    where file_id = #{fileId}
+  </update>
+
+</mapper>

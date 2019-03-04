@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.sysmanage.mapper.SysStudentParentMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.SysStudentParent">
+    <id column="stu_par_id" jdbcType="VARCHAR" property="stuParId" />
+    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_student_parent
+    where stu_par_id = #{stuParId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBySelectiveElement" parameterType="java.util.HashMap">
+    delete from sys_student_parent
+    where 1!=1 
+      <if test="studentId != null and studentId != ''">
+        and student_id = #{studentId}
+      </if>
+      <if test="parentId != null and parentId != ''">
+        and parent_id = #{parentId}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.SysStudentParent">
+    insert into sys_student_parent (stu_par_id, student_id, parent_id, 
+      status)
+    values (#{stuParId,jdbcType=VARCHAR}, #{studentId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.SysStudentParent">
+    insert into sys_student_parent
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stuParId != null">
+        stu_par_id,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stuParId != null">
+        #{stuParId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.SysStudentParent">
+    update sys_student_parent
+    set student_id = #{studentId,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT}
+    where stu_par_id = #{stuParId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.SysStudentParent">
+    update sys_student_parent
+    <set>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where stu_par_id = #{stuParId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select stu_par_id, student_id, parent_id, status
+    from sys_student_parent
+    where stu_par_id = #{stuParId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select stu_par_id, student_id, parent_id, status
+    from sys_student_parent
+    <where> 
+      <if test="studentId != null and studentId != ''">
+        and student_id = #{studentId}
+      </if>
+      <if test="parentId != null and parentId != ''">
+        and parent_id = #{parentId}
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sys_student_parent (stu_par_id, 
+      student_id, parent_id, status
+      
+    ) values <foreach collection="list" item="item" separator=",">(#{item.stuParId,jdbcType=VARCHAR}, 
+      #{item.studentId,jdbcType=VARCHAR}, #{item.parentId,jdbcType=VARCHAR}, #{item.status,jdbcType=TINYINT}
+      )</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from sys_student_parent
+    where stu_par_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+
+  <update id="updateStatus" parameterType="java.util.List">
+    update sys_student_parent set status = 0
+    where student_id in
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </update>
+</mapper>

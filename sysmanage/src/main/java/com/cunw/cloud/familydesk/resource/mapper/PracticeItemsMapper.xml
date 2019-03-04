@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cunw.cloud.familydesk.resource.mapper.PracticeItemsMapper">
+  <resultMap id="BaseResultMap" type="com.cunw.cloud.familydesk.common.model.PracticeItems">
+    <id column="item_id" jdbcType="VARCHAR" property="itemId" />
+    <result column="paper_id" jdbcType="VARCHAR" property="paperId" />
+    <result column="quest_id" jdbcType="VARCHAR" property="questId" />
+    <result column="course_id" jdbcType="VARCHAR" property="courseId" />
+    <result column="class_code" jdbcType="VARCHAR" property="classCode" />
+    <result column="teacher_code" jdbcType="VARCHAR" property="teacherCode" />
+    <result column="answer_time" jdbcType="INTEGER" property="answerTime" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="crt_user_code" jdbcType="VARCHAR" property="crtUserCode" />
+    <result column="crt_org_code" jdbcType="VARCHAR" property="crtOrgCode" />
+    <result column="crt_date" jdbcType="TIMESTAMP" property="crtDate" />
+    <result column="upd_user_code" jdbcType="VARCHAR" property="updUserCode" />
+    <result column="upd_org_code" jdbcType="VARCHAR" property="updOrgCode" />
+    <result column="upd_date" jdbcType="TIMESTAMP" property="updDate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from resource_practice_items
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cunw.cloud.familydesk.common.model.PracticeItems">
+    insert into resource_practice_items (item_id, paper_id, quest_id, 
+      course_id, class_code, teacher_code, 
+      answer_time, start_time, end_time, 
+      type, status, crt_user_code, 
+      crt_org_code, crt_date, upd_user_code, 
+      upd_org_code, upd_date)
+    values (#{itemId,jdbcType=VARCHAR}, #{paperId,jdbcType=VARCHAR}, #{questId,jdbcType=VARCHAR}, 
+      #{courseId,jdbcType=VARCHAR}, #{classCode,jdbcType=VARCHAR}, #{teacherCode,jdbcType=VARCHAR}, 
+      #{answerTime,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{crtUserCode,jdbcType=VARCHAR}, 
+      #{crtOrgCode,jdbcType=VARCHAR}, #{crtDate,jdbcType=TIMESTAMP}, #{updUserCode,jdbcType=VARCHAR}, 
+      #{updOrgCode,jdbcType=VARCHAR}, #{updDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cunw.cloud.familydesk.common.model.PracticeItems">
+    insert into resource_practice_items
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        item_id,
+      </if>
+      <if test="paperId != null">
+        paper_id,
+      </if>
+      <if test="questId != null">
+        quest_id,
+      </if>
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="classCode != null">
+        class_code,
+      </if>
+      <if test="teacherCode != null">
+        teacher_code,
+      </if>
+      <if test="answerTime != null">
+        answer_time,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code,
+      </if>
+      <if test="crtOrgCode != null">
+        crt_org_code,
+      </if>
+      <if test="crtDate != null">
+        crt_date,
+      </if>
+      <if test="updUserCode != null">
+        upd_user_code,
+      </if>
+      <if test="updOrgCode != null">
+        upd_org_code,
+      </if>
+      <if test="updDate != null">
+        upd_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="paperId != null">
+        #{paperId,jdbcType=VARCHAR},
+      </if>
+      <if test="questId != null">
+        #{questId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=VARCHAR},
+      </if>
+      <if test="classCode != null">
+        #{classCode,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherCode != null">
+        #{teacherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="answerTime != null">
+        #{answerTime,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="crtUserCode != null">
+        #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtOrgCode != null">
+        #{crtOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updUserCode != null">
+        #{updUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updOrgCode != null">
+        #{updOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updDate != null">
+        #{updDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cunw.cloud.familydesk.common.model.PracticeItems">
+    update resource_practice_items
+    set paper_id = #{paperId,jdbcType=VARCHAR},
+      quest_id = #{questId,jdbcType=VARCHAR},
+      course_id = #{courseId,jdbcType=VARCHAR},
+      class_code = #{classCode,jdbcType=VARCHAR},
+      teacher_code = #{teacherCode,jdbcType=VARCHAR},
+      answer_time = #{answerTime,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+      crt_org_code = #{crtOrgCode,jdbcType=VARCHAR},
+      crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      upd_user_code = #{updUserCode,jdbcType=VARCHAR},
+      upd_org_code = #{updOrgCode,jdbcType=VARCHAR},
+      upd_date = #{updDate,jdbcType=TIMESTAMP}
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cunw.cloud.familydesk.common.model.PracticeItems">
+    update resource_practice_items
+    <set>
+      <if test="paperId != null">
+        paper_id = #{paperId,jdbcType=VARCHAR},
+      </if>
+      <if test="questId != null">
+        quest_id = #{questId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseId != null">
+        course_id = #{courseId,jdbcType=VARCHAR},
+      </if>
+      <if test="classCode != null">
+        class_code = #{classCode,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherCode != null">
+        teacher_code = #{teacherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="answerTime != null">
+        answer_time = #{answerTime,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="crtUserCode != null">
+        crt_user_code = #{crtUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtOrgCode != null">
+        crt_org_code = #{crtOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crtDate != null">
+        crt_date = #{crtDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updUserCode != null">
+        upd_user_code = #{updUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updOrgCode != null">
+        upd_org_code = #{updOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updDate != null">
+        upd_date = #{updDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select item_id, paper_id, quest_id, course_id, class_code, teacher_code, answer_time, 
+    start_time, end_time, type, status, crt_user_code, crt_org_code, crt_date, upd_user_code, 
+    upd_org_code, upd_date
+    from resource_practice_items
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParameters" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select item_id, paper_id, quest_id, course_id, class_code, teacher_code, answer_time, 
+    start_time, end_time, type, status, crt_user_code, crt_org_code, crt_date, upd_user_code, 
+    upd_org_code, upd_date
+    from resource_practice_items
+    <where> 
+      <if test="paperId != null and paperId != ''">
+        and paper_id = #{paperId}
+      </if>
+      <if test="questId != null and questId != ''">
+        and quest_id = #{questId}
+      </if>
+      <if test="courseId != null and courseId != ''">
+        and course_id = #{courseId}
+      </if>
+      <if test="classCode != null and classCode != ''">
+        and class_code = #{classCode}
+      </if>
+      <if test="teacherCode != null and teacherCode != ''">
+        and teacher_code = #{teacherCode}
+      </if>
+      <if test="answerTime != null">
+        and answer_time = #{answerTime}
+      </if>
+      <if test="startTime != null">
+        and start_time = #{startTime}
+      </if>
+      <if test="endTime != null">
+        and end_time = #{endTime}
+      </if>
+      <if test="type != null and type != ''">
+        and type = #{type}
+      </if>
+      <if test="status != null and status != ''">
+        and status = #{status}
+      </if>
+      <if test="crtUserCode != null and crtUserCode != ''">
+        and crt_user_code = #{crtUserCode}
+      </if>
+      <if test="crtOrgCode != null and crtOrgCode != ''">
+        and crt_org_code = #{crtOrgCode}
+      </if>
+      <if test="crtDate != null">
+        and crt_date = #{crtDate}
+      </if>
+      <if test="updUserCode != null and updUserCode != ''">
+        and upd_user_code = #{updUserCode}
+      </if>
+      <if test="updOrgCode != null and updOrgCode != ''">
+        and upd_org_code = #{updOrgCode}
+      </if>
+      <if test="updDate != null">
+        and upd_date = #{updDate}
+      </if>
+    </where>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into resource_practice_items (item_id, 
+      paper_id, quest_id, course_id, 
+      class_code, teacher_code, answer_time, 
+      start_time, end_time, type, 
+      status, crt_user_code, crt_org_code, 
+      crt_date, upd_user_code, upd_org_code, 
+      upd_date
+    ) values <foreach collection="list" item="item" separator=",">(#{item.itemId,jdbcType=VARCHAR}, 
+      #{item.paperId,jdbcType=VARCHAR}, #{item.questId,jdbcType=VARCHAR}, #{item.courseId,jdbcType=VARCHAR}, 
+      #{item.classCode,jdbcType=VARCHAR}, #{item.teacherCode,jdbcType=VARCHAR}, #{item.answerTime,jdbcType=INTEGER}, 
+      #{item.startTime,jdbcType=TIMESTAMP}, #{item.endTime,jdbcType=TIMESTAMP}, #{item.type,jdbcType=VARCHAR}, 
+      #{item.status,jdbcType=VARCHAR}, #{item.crtUserCode,jdbcType=VARCHAR}, #{item.crtOrgCode,jdbcType=VARCHAR}, 
+      #{item.crtDate,jdbcType=TIMESTAMP}, #{item.updUserCode,jdbcType=VARCHAR}, #{item.updOrgCode,jdbcType=VARCHAR}, 
+      #{item.updDate,jdbcType=TIMESTAMP})</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from resource_practice_items
+    where item_id in 
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      ${id}
+    </foreach>
+  </delete>
+  <delete id="deleteByParameters" parameterType="java.util.HashMap">
+    delete from resource_practice_items where paper_id = #{paperId}
+  </delete>
+</mapper>
